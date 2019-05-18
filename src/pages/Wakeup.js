@@ -3,20 +3,18 @@ import axios from 'axios'
 
 const Wakeup = props => {
     const spamWakeup = () => {
-        console.log(`${process.env.REACT_APP_API_URL}/api/wakeup`)
         axios.get(`${process.env.REACT_APP_API_URL}/api/wakeup`)
             .then((_) => {
-                window.location = '/hole'
+                window.location = `${process.env.REACT_APP_BASE_NAME}hole`
             })
             .catch((error) => {
-                console.log("Trying again...")
                 setTimeout(() => { spamWakeup() }, 1000)
             })
     }
 
     useEffect(() => {
         spamWakeup()
-    })
+    }, [])
 
     return (<>
         Wakeup screen

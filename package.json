@@ -2,7 +2,7 @@
   "name": "word-hole",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://alexanderdouglasbrown.github.io/Word-Hole-React/",
+  "homepage": "https://alexanderdouglasbrown.github.io/Word-Hole/",
   "dependencies": {
     "axios": "^0.18.0",
     "gh-pages": "^2.0.1",
