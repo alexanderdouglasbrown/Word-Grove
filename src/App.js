@@ -2,15 +2,13 @@ import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import './App.css'
 
-import Wakeup from './pages/Wakeup'
-import Hole from './pages/Hole'
+import Home from './pages/Home'
 
 const App = () => {
   return (
     <BrowserRouter basename={process.env.REACT_APP_BASE_NAME}>
       <Switch>
-        <Route path="/" exact component={Wakeup} />
-        <Route path="/hole" exact component={Hole} />
+        <Route path="/" exact component={Home} />
       </Switch>
     </BrowserRouter>
   )
