@@ -4,11 +4,12 @@
   "private": true,
   "homepage": "https://alexanderdouglasbrown.github.io/Word-Hole/",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
+    "bulma": "^0.7.5",
     "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.0",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },
   "scripts": {
