@@ -1,0 +1,16 @@
+.card {
+    margin: 4rem auto 0 auto;
+    width: 40rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-title {
+    padding: 1.5rem 0 1.5rem 4rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+    background-color:#363636;
+    color: whitesmoke;
+}

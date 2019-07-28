@@ -11,7 +11,7 @@ const NavBar = props => {
                     Word Hole
                 </Link>
             </div>
-            <div class="navbar-end">
+            <div className="navbar-end">
                 <div className="navbar-item">
                     <div className="buttons">
                         <Link className="button is-dark" to={"register"}>
