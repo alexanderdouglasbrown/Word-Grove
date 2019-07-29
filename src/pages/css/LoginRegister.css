@@ -1,6 +1,11 @@
+.container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .card {
     margin: 4rem auto 0 auto;
-    width: 40rem;
+    max-width: 40rem !important;
 }
 
 .card-body {
