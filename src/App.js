@@ -6,6 +6,7 @@ import {toast} from 'react-toastify'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import Logout from './pages/Logout'
 import Error404 from './pages/Error404'
 
 import NavBar from './components/NavBar'
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/" exact component={Home} />
         <Route path="/register" exact component={Register} />
         <Route path="/login" exact component={Login} />
+        <Route path="/logout" exact component={Logout} />
         <Route component={Error404} />
       </Switch>
     </BrowserRouter>
