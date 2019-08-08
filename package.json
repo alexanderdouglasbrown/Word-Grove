@@ -4,16 +4,18 @@
   "private": true,
   "homepage": "https://alexanderdouglasbrown.github.io/Word-Hole/",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.19",
-    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.21",
+    "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.18.1",
     "bulma": "^0.7.5",
-    "gh-pages": "^2.0.1",
+    "gh-pages": "^2.1.0",
     "react": "^16.8.6",
+    "react-cookie": "^4.0.1",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "react-toastify": "^5.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

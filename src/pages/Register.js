@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { toast } from 'react-toastify'
+import {useCookies} from 'react-cookie'
 
 import './css/LoginRegister.css'
 
@@ -9,18 +11,21 @@ const Register = props => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [, setCookie] = useCookies(['token'])
 
     const handleSubmit = e => {
         e.preventDefault();
-        
-        axios.post(`${process.env.REACT_APP_API_URL}/api/register`, {username, password})
-        .then(res=>{
-            if (res.data.error)
-                console.log(res.data.error)
-                else
-                console.log("Yey")
-        })
-        .catch()
+
+        axios.post(`${process.env.REACT_APP_API_URL}/api/register`, { username, password })
+            .then(res => {
+                if (res.data.error) {
+                    toast.error(res.data.error)
+                    return
+                }
+
+                setCookie('token', res.data.token)
+            })
+            .catch()
     }
 
     return (

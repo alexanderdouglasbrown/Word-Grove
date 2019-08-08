@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import './App.css'
+import {toast} from 'react-toastify'
 
 import Home from './pages/Home'
 import Register from './pages/Register'
@@ -8,6 +9,11 @@ import Login from './pages/Login'
 import Error404 from './pages/Error404'
 
 import NavBar from './components/NavBar'
+
+toast.configure({
+  hideProgressBar: true,
+  newestOnTop: true
+})
 
 const App = () => {
   return (
