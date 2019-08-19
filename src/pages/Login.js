@@ -24,7 +24,7 @@ const Login = props => {
                     return
                 }
 
-                setCookie('token', res.data.token)
+                setCookie('token', res.data.jwt)
                 setRedirect(true)
             })
             .catch()

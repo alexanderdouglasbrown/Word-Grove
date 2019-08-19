@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { withCookies } from 'react-cookie'
+import UserContext from '../UserContext'
+import jwt_decode from 'jwt-decode'
 
 import './css/NavBar.css'
 
 const NavBar = ({ cookies, ...props }) => {
     const token = cookies.get('token')
-    const [isLoggedIn, setIsLoggedIn] = useState(!token)
+    const [isLoggedIn, setIsLoggedIn] = useState(!!token)
+    const [userData, globalSetIsLoggedIn, globalSetUsername] = useContext(UserContext)
 
     useEffect(() => {
         if (cookies.get('token')) {
-            setIsLoggedIn(false)
-        } else {
             setIsLoggedIn(true)
+            globalSetIsLoggedIn(true)
+            globalSetUsername(jwt_decode(cookies.get('token'))["Username"])
+        } else {
+            setIsLoggedIn(false)
+            globalSetIsLoggedIn(false)
+            globalSetUsername("")
         }
+        // eslint-disable-next-line
     }, [cookies, token])
 
     return (
@@ -26,13 +34,15 @@ const NavBar = ({ cookies, ...props }) => {
                     <div className="buttons">
                         {isLoggedIn ?
                             <>
+                                <Link className="button">{userData.username}</Link>
+                                <Link className="button" to={"logout"}>Log Out</Link>
+                            </>
+                            :
+                            <>
                                 <Link className="button is-dark" to={"register"}>Register</Link>
                                 <Link className="button is-primary" to={"login"}><strong>Log In</strong></Link>
                             </>
-                            : 
-                            <>
-                                <Link className="button" to={"logout"}>Log Out</Link>
-                            </>}
+                        }
                     </div>
                 </div>
             </div>

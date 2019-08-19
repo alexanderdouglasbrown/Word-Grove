@@ -7,7 +7,7 @@ const Logout = ({cookies, ...props}) => {
     useEffect(()=>{
         cookies.remove('token')
         toast.info("You have been logged out")
-    }, [])
+    }, [cookies])
 
     return <Redirect to="/" />
 }

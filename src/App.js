@@ -1,7 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import './App.css'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import { UserProvider } from './UserContext'
 
 import Home from './pages/Home'
 import Register from './pages/Register'
@@ -19,14 +20,16 @@ toast.configure({
 const App = () => {
   return (
     <BrowserRouter basename={process.env.REACT_APP_BASE_NAME}>
-      <NavBar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/register" exact component={Register} />
-        <Route path="/login" exact component={Login} />
-        <Route path="/logout" exact component={Logout} />
-        <Route component={Error404} />
-      </Switch>
+      <UserProvider>
+        <NavBar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/logout" exact component={Logout} />
+          <Route component={Error404} />
+        </Switch>
+      </UserProvider>
     </BrowserRouter>
   )
 }
