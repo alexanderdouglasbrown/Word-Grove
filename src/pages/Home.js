@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const Home = props => {
     // const [posts, setPosts] = useState(null)
-    const [isLoggedIn] = useContext(UserContext)
+    const [userData] = useContext(UserContext)
     const [sayHi, setSayHi] = useState(false) // Check if connection to server established
 
     const sendHello = () => {
