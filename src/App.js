@@ -15,7 +15,8 @@ import LoginWatcher from './components/LoginWatcher'
 
 toast.configure({
   hideProgressBar: true,
-  newestOnTop: true
+  newestOnTop: true, 
+  autoClose: 3000
 })
 
 const App = () => {

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import UserContext from '../UserContext'
 import axios from 'axios'
 
+import PostBox from '../components/PostBox'
 // import Post from '../components/Post'
 
 const Home = props => {
@@ -32,7 +33,15 @@ const Home = props => {
                 <progress className="progress is-small is-primary" max="100">15%</progress>
             </>
             :
-            <>CONNECTION ESTABLSIHED. Hi</>
+            <>
+                {userData.isLoggedIn ?
+                    <div className="container">
+                        <div className="card" style={{ padding: "1rem" }}>
+                            <PostBox />
+                        </div>
+                    </div>
+                    : null}
+            </>
         }
     </div>)
 }
