@@ -13,14 +13,14 @@ const NavBar = () => {
         <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <Link className="navbar-item NavBar-brand" to="/">Word Hole</Link>
-                <div onClick={()=>setIsActive(!isActive)} role="button" className={`${isActive? "is-active" : ""} navbar-burger`} aria-label="menu" aria-expanded="false">
+                <div onClick={() => setIsActive(!isActive)} role="button" className={`${isActive ? "is-active" : ""} navbar-burger`} aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                 </div>
             </div>
 
-            <div className={`${isActive? "is-active" : ""} navbar-menu`}>
+            <div className={`${isActive ? "is-active" : ""} navbar-menu`}>
                 <div className="navbar-end">
                     {userData.isLoggedIn ?
                         <div className="navbar-item has-dropdown is-hoverable">

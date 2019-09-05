@@ -3,8 +3,8 @@ import React from 'react'
 const Post = props => {
     return (<>
         {
-            <div key={props.data.id}>
-                {props.data.message}
+            <div key={props.id}>
+                {props.message}
             </div>
         }
     </>)

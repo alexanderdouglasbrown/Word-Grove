@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
-import UserContext from '../UserContext'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+
+import UserContext from '../UserContext'
 
 import PostBox from '../components/PostBox'
 // import Post from '../components/Post'
@@ -27,6 +29,16 @@ const Home = props => {
         // eslint-disable-next-line
     }, [])
 
+    useEffect(() => {
+        if (sayHi) {
+            axios.get(`${process.env.REACT_APP_API_URL}/api/home/posts`)
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(() => toast.error("Sorry, something went wrong"))
+        }
+    }, [sayHi])
+
     if (sayHi === null)
         return null
 
@@ -45,6 +57,7 @@ const Home = props => {
                         </div>
                     </div>
                     : null}
+
             </>
         }
     </div>)
