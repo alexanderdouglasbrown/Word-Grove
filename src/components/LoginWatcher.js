@@ -11,8 +11,14 @@ const LoginWatcher = ({ cookies }) => {
 
     useEffect(() => {
         if (cookies.get('token')) {
-            globalSetIsLoggedIn(true)
-            globalSetUsername(jwt_decode(cookies.get('token'))["Username"])
+            const token = jwt_decode(cookies.get('token'))
+            
+            if (token.exp > (Date.now() / 1000)){
+                globalSetIsLoggedIn(true)
+                globalSetUsername(token["Username"])
+            } else {
+                cookies.remove('token')
+            }
         } else {
             globalSetIsLoggedIn(false)
             globalSetUsername("")
