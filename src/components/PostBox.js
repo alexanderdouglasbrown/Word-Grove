@@ -22,13 +22,13 @@ const PostBox = ({ cookies, ...props }) => {
     const handleSubmit = e => {
         e.preventDefault()
 
-        axios.post(`${process.env.REACT_APP_API_URL}/api/home/post`, {Post: inputText}, {
+        axios.post(`${process.env.REACT_APP_API_URL}/api/home/post`, { Post: inputText }, {
             headers: { Authorization: cookies.get('token') }
         })
             .then(() => {
-                toast("Post saved")
                 setInputText("")
                 setCharacterCounter(maxCharacters)
+                props.loadPosts()
             })
             .catch(() => {
                 toast.error("Sorry, an error occurred")
@@ -36,11 +36,13 @@ const PostBox = ({ cookies, ...props }) => {
     }
 
     return (
-        <form onSubmit={e => handleSubmit(e)}>
-            <textarea required onChange={e => handleInput(e)} className="textarea" placeholder="Put some words into Word Hole" value={inputText} />
-            <button type="submit" className="button is-primary" style={{ marginTop: "0.5rem" }}>Post</button>
-            <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
-        </form>
+        <div className="card" style={{ padding: "1rem", marginTop: "2rem", marginBottom: "2rem" }}>
+            <form onSubmit={e => handleSubmit(e)}>
+                <textarea required onChange={e => handleInput(e)} className="textarea" placeholder="Put some words into Word Hole" value={inputText} />
+                <button type="submit" className="button is-primary" style={{ marginTop: "0.5rem" }}>Post</button>
+                <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
+            </form>
+        </div>
     )
 }
 
