@@ -8,7 +8,6 @@ import PostBox from '../components/PostBox'
 import Post from '../components/Post'
 
 const Home = props => {
-    // const [posts, setPosts] = useState(null)
     const [userData] = useContext(UserContext)
     const [sayHi, setSayHi] = useState(null) // Check if connection to server established
 
