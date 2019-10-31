@@ -6,17 +6,17 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
-    "@fortawesome/react-fontawesome": "^0.1.5",
+    "@fortawesome/react-fontawesome": "^0.1.6",
     "axios": "^0.19.0",
-    "bulma": "^0.7.5",
+    "bulma": "^0.8.0",
     "gh-pages": "^2.1.1",
     "jwt-decode": "^2.2.0",
-    "react": "^16.10.1",
+    "react": "^16.10.2",
     "react-cookie": "^4.0.1",
-    "react-dom": "^16.10.1",
+    "react-dom": "^16.10.2",
     "react-linkify": "^1.0.0-alpha",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.2",
+    "react-scripts": "3.2.0",
     "react-toastify": "^5.4.0"
   },
   "scripts": {

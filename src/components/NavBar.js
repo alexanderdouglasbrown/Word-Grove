@@ -10,7 +10,7 @@ const NavBar = () => {
     const [isActive, setIsActive] = useState(false)
 
     return (
-        <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
+        <nav style={{ marginBottom: "1rem" }} className="navbar is-dark" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <Link className="navbar-item NavBar-brand" to="/">Word Hole</Link>
                 <div onClick={() => setIsActive(!isActive)} role="button" className={`${isActive ? "is-active" : ""} navbar-burger`} aria-label="menu" aria-expanded="false">
