@@ -1,8 +1,10 @@
 import React from 'react'
 import Linkify from 'react-linkify'
 
+import '../components/css/LinkButton.css'
+
 const Post = props => {
-    const { post, username, date } = props.postData
+    const { post, username, date, id } = props.postData
 
     return (
         <div className="card" style={{ padding: "1rem", marginTop: 0, marginBottom: "0.75rem", whiteSpace: "pre-wrap" }}>
@@ -12,8 +14,8 @@ const Post = props => {
                 <div>
                     {`${username}, ${date}`}
                 </div>
-                <div>
-                    Comment
+                <div className="LinkButton" onClick={() => props.expandPost(id)}>
+                    Comments
                 </div>
             </div>
         </div>)

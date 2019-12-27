@@ -28,11 +28,9 @@ const PostBox = ({ cookies, ...props }) => {
             .then(() => {
                 setInputText("")
                 setCharacterCounter(maxCharacters)
-                props.loadPosts()
+                props.refreshPosts()
             })
-            .catch(() => {
-                toast.error("Sorry, an error occurred")
-            })
+            .catch(() => toast.error("Sorry, an error occurred"))
     }
 
     return (

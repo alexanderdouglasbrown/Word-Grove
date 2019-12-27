@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { UserProvider } from './UserContext'
 
 import Home from './pages/Home'
+import PostPage from './pages/PostPage'
 import Profile from './pages/Profile'
 import Register from './pages/Register'
 import Login from './pages/Login'
@@ -16,7 +17,7 @@ import LoginWatcher from './components/LoginWatcher'
 
 toast.configure({
   hideProgressBar: true,
-  newestOnTop: true, 
+  newestOnTop: true,
   autoClose: 3000
 })
 
@@ -28,6 +29,7 @@ const App = () => {
         <NavBar />
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/wh/:id" exact component={PostPage} />
           <Route path="/profile" exact component={Profile} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />

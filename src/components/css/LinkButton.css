@@ -1,0 +1,10 @@
+.LinkButton {
+    cursor: pointer;
+    font-weight: 600;
+    color: #007bff;
+}
+
+.LinkButton:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
