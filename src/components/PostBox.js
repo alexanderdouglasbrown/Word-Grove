@@ -34,12 +34,14 @@ const PostBox = ({ cookies, ...props }) => {
     }
 
     return (
-        <div className="card" style={{ padding: "1rem", marginTop: "0", marginBottom: "2rem" }}>
-            <form onSubmit={e => handleSubmit(e)}>
-                <textarea required onChange={e => handleInput(e)} className="textarea" placeholder="Put your words on Word Hole" value={inputText} />
-                <button type="submit" className="button is-primary" style={{ marginTop: "0.5rem" }}>Post</button>
-                <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
-            </form>
+        <div className="card" style={{margin: "1rem auto"}}>
+            <div className="card-content">
+                <form onSubmit={e => handleSubmit(e)}>
+                    <textarea required onChange={e => handleInput(e)} className="textarea" placeholder="Put your words on Word Hole" value={inputText} />
+                    <button type="submit" className="button is-primary" style={{ marginTop: "0.5rem" }}>Post</button>
+                    <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
+                </form>
+            </div>
         </div>
     )
 }

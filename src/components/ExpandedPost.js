@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Linkify from 'react-linkify'
 
 // import UserContext from '../UserContext'
 
@@ -18,7 +19,12 @@ const ExpandedPost = props => {
                 setPostData(res.data.post)
                 setCommentsData(res.data.comments)
             })
-            .catch(() => toast.error("Sorry, something went wrong"))
+            .catch(err => {
+                if (err && err.response && err.response.data && err.response.data.error)
+                    toast.error(err.response.data.error)
+                else
+                    toast.error("Sorry, an error occured")
+            })
     }, [postID])
 
     useEffect(() => {
@@ -32,8 +38,16 @@ const ExpandedPost = props => {
 
     return <>
         {postData ?
-            <div className="card" style={{ fontSize: "1.2rem", padding: "1rem", marginTop: 0, marginBottom: "0.75rem", whiteSpace: "pre-wrap" }}>
-                {postData.post}
+            <div className="card" style={{ margin: "1rem auto" }}>
+                <div className="card-content" style={{ whiteSpace: "pre-wrap" }}>
+                    <Linkify>{postData.post}</Linkify>
+                </div>
+                <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
+                    <div>
+                        {`${postData.username}, ${postData.date}`}
+                    </div>
+                    <div className="LinkButton">¯\_(ツ)_/¯</div>
+                </div>
             </div>
             :
             null
