@@ -20,11 +20,13 @@ const Home = props => {
     const closePostModal = () => {
         setIsPostModalVisible(false)
         setSelectedPostID(null)
+        window.history.replaceState(null, null, '/')
     }
 
     const openPostModal = postID => {
         setSelectedPostID(postID)
         setIsPostModalVisible(true)
+        window.history.replaceState(null, null, `/wh/${postID}`)
     }
 
     const sendHello = useCallback(() => {

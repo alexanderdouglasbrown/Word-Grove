@@ -24,7 +24,9 @@ const PostModal = props => {
             }
         }}
     >
-        <ExpandedPost id={postID} />
+        <div className="container">
+            <ExpandedPost id={postID} />
+        </div>
     </Modal>
 }
 

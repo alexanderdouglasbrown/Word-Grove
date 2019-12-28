@@ -6,14 +6,17 @@ import UserContext from '../UserContext'
 
 // Handles setting globals for logins
 const LoginWatcher = ({ cookies }) => {
-    const token = cookies.get('token')
+    const cookieToken = cookies.get('token')
     const [, globalSetIsLoggedIn, globalSetUsername] = useContext(UserContext)
 
     useEffect(() => {
-        if (cookies.get('token')) {
-            const token = jwt_decode(cookies.get('token'))
-            
-            if (token.exp > (Date.now() / 1000)){
+        let token = null
+        try {
+            token = jwt_decode(cookieToken)
+        } catch { }
+
+        if (token) {
+            if (token.exp > (Date.now() / 1000)) {
                 globalSetIsLoggedIn(true)
                 globalSetUsername(token["Username"])
             } else {
@@ -23,9 +26,9 @@ const LoginWatcher = ({ cookies }) => {
             globalSetIsLoggedIn(false)
             globalSetUsername("")
         }
-        // eslint-disable-next-line
-    }, [cookies, token])
-    return (<></>)
+    }, [cookies, cookieToken, globalSetIsLoggedIn, globalSetUsername])
+
+    return <></>
 }
 
 export default withCookies(LoginWatcher)
