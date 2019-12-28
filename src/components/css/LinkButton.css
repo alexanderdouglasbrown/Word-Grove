@@ -8,3 +8,14 @@
     text-decoration: underline;
     color: #0056b3;
 }
+
+.LinkButton-Danger {
+    cursor: pointer;
+    font-weight: 600;
+    color: maroon;
+}
+
+.LinkButton-Danger:hover {
+    text-decoration: underline;
+    color: #5d0000;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react'
+import React, { useEffect, useState, useContext, useCallback, useRef } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -16,6 +16,37 @@ const Home = props => {
 
     const [isPostModalVisible, setIsPostModalVisible] = useState(false)
     const [selectedPostID, setSelectedPostID] = useState(null)
+
+    const getPostData = useRef()
+    const isFetching = useRef(false)
+    getPostData.current = () => { return postData }
+
+    const handleScroll = useCallback(e => {
+        if (postData && !isFetching.current && window.innerHeight + document.documentElement.scrollTop + 200 >= document.documentElement.offsetHeight)
+            getMorePosts()
+    }, [postData])
+
+    const refreshPosts = () => {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/home/posts`,
+            { params: { LastID: null } })
+            .then(res => setPostData(res.data))
+            .catch(() => toast.error("Sorry, something went wrong"))
+    }
+
+    const getMorePosts = () => {
+        const posts = getPostData.current()
+        const lastID = posts[posts.length - 1].id
+
+        if (lastID <= 1)
+            return
+
+        isFetching.current = true
+        axios.get(`${process.env.REACT_APP_API_URL}/api/home/posts`,
+            { params: { lastID } })
+            .then(res => setPostData([...posts, ...res.data]))
+            .catch(() => toast.error("Sorry, something went wrong"))
+            .finally(() => isFetching.current = false)
+    }
 
     const closePostModal = () => {
         setIsPostModalVisible(false)
@@ -41,11 +72,10 @@ const Home = props => {
             })
     }, [])
 
-    const refreshPosts = () => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/home/posts`)
-            .then(res => setPostData(res.data))
-            .catch(() => toast.error("Sorry, something went wrong"))
-    }
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [handleScroll])
 
     useEffect(() => {
         sendHello()
