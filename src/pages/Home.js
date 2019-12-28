@@ -22,9 +22,9 @@ const Home = props => {
     getPostData.current = () => { return postData }
 
     const handleScroll = useCallback(e => {
-        if (postData && !isFetching.current && window.innerHeight + document.documentElement.scrollTop + 200 >= document.documentElement.offsetHeight)
+        if (!isFetching.current && window.innerHeight + document.documentElement.scrollTop + 200 >= document.documentElement.offsetHeight)
             getMorePosts()
-    }, [postData])
+    }, [])
 
     const refreshPosts = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/home/posts`,
@@ -35,6 +35,10 @@ const Home = props => {
 
     const getMorePosts = () => {
         const posts = getPostData.current()
+
+        if (!posts || posts.length < 1)
+            return
+
         const lastID = posts[posts.length - 1].id
 
         if (lastID <= 1)
@@ -86,6 +90,11 @@ const Home = props => {
             refreshPosts()
         }
     }, [sayHi])
+
+    useEffect(() => { // Trigger infinite scroll if non enough height for a scrollbar
+        if (postData && postData.length > 0 && window.innerHeight > document.documentElement.offsetHeight)
+            handleScroll()
+    }, [postData, handleScroll])
 
     return <>
         {sayHi ?

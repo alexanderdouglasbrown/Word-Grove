@@ -14,7 +14,7 @@ const PostModal = props => {
         style={{
             content: {
                 padding: "2rem",
-                maxWidth: "100%",
+                maxWidth: "42rem",
                 maxhHeight: "100%",
                 margin: "auto"
             },
