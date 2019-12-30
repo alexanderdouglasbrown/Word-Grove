@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useCallback } from 'react'
 import { withCookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode'
 
@@ -6,16 +6,22 @@ import UserContext from '../UserContext'
 
 // Handles setting globals for logins
 const LoginWatcher = ({ cookies }) => {
-    const cookieToken = cookies.get('token')
+    const cookieState = document.cookie
     const [, globalSetIsLoggedIn, globalSetUsername, globalSetUserID, globalSetAccess, globalSetToken] = useContext(UserContext)
 
-    useEffect(() => {
-        let token = null
-        try {
-            token = jwt_decode(cookieToken)
-        } catch { }
+    const clearGlobals = useCallback(() => {
+        globalSetIsLoggedIn(false)
+        globalSetUsername("")
+        globalSetUserID(null)
+        globalSetAccess("User")
+        globalSetToken(null)
+    }, [globalSetIsLoggedIn, globalSetUsername, globalSetUserID, globalSetAccess, globalSetToken])
 
-        if (token) {
+    useEffect(() => {
+        const cookieToken = cookies.get('token')
+
+        if (cookieToken) {
+            const token = jwt_decode(cookieToken)
             if (token.exp > (Date.now() / 1000)) {
                 globalSetIsLoggedIn(true)
                 globalSetUsername(token["Username"])
@@ -24,15 +30,12 @@ const LoginWatcher = ({ cookies }) => {
                 globalSetToken(cookieToken)
             } else {
                 cookies.remove('token')
+                clearGlobals()
             }
         } else {
-            globalSetIsLoggedIn(false)
-            globalSetUsername("")
-            globalSetUserID(null)
-            globalSetAccess("User")
-            globalSetToken(null)
+            clearGlobals()
         }
-    }, [cookies, cookieToken, globalSetIsLoggedIn, globalSetUsername, globalSetUserID, globalSetAccess, globalSetToken])
+    }, [cookies, cookieState, globalSetIsLoggedIn, globalSetUsername, globalSetUserID, globalSetAccess, globalSetToken, clearGlobals])
 
     return <></>
 }

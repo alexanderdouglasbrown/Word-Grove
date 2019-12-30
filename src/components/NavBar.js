@@ -40,7 +40,7 @@ const NavBar = () => {
                             </div>
 
                             <div className="navbar-dropdown">
-                                <Link className="navbar-item" to={"/profile"}>Profile</Link>
+                                <Link className="navbar-item" to={`/p/${userData.username}`}>Profile</Link>
                                 <hr className="navbar-divider" />
                                 <Link className="navbar-item" to={"/logout"}>Log Out</Link>
                             </div>
