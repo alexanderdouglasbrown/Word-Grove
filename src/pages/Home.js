@@ -111,6 +111,7 @@ const Home = props => {
                     isOpen={isPostModalVisible}
                     closeModal={closePostModal}
                     postID={selectedPostID}
+                    refresh={refreshPosts}
                 />
             </>
             :

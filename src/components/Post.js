@@ -4,7 +4,7 @@ import Linkify from 'react-linkify'
 import '../components/css/LinkButton.css'
 
 const Post = props => {
-    const { post, username, date, id } = props.postData
+    const { post, username, id } = props.postData
 
     const expandPost = e => {
         if (e.target && e.target.tagName && e.target.tagName.toLowerCase() !== "a")
@@ -18,7 +18,7 @@ const Post = props => {
             </div>
             <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
                 <div>
-                    {`${username}, ${date}`}
+                    {`Posted by ${username}`}
                 </div>
                 <div className="LinkButton">Like</div>
             </div>

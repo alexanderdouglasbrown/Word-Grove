@@ -56,12 +56,29 @@ const ExpandedPost = props => {
         setCharacterCounter(maxCharacters)
     }
 
+    const deletePost = () => {
+        if (window.confirm("Are you sure you would like to delete this post?")) {
+            axios.delete(`${process.env.REACT_APP_API_URL}/api/post`,
+                { data: { ID: postID }, headers: { Authorization: userData.token } })
+                .then(()=>{
+                    props.postDeleted()
+                })
+                .catch(err => {
+                    if (err && err.response && err.response.data && err.response.data.error)
+                        toast.error(err.response.data.error)
+                    else
+                        toast.error("Sorry, an error occured")
+                })
+        }
+    }
+
     const saveEdit = () => {
         axios.patch(`${process.env.REACT_APP_API_URL}/api/post`,
             { ID: postID, Post: editInput }, { headers: { Authorization: userData.token } })
             .then(() => {
                 refreshPost()
                 cancelEdit()
+                props.postEdited()
             })
             .catch(err => {
                 if (err && err.response && err.response.data && err.response.data.error)
@@ -86,7 +103,7 @@ const ExpandedPost = props => {
                 <div className="card-content" style={{ whiteSpace: "pre-wrap" }}>
                     {isEditMode ?
                         <>
-                            <div className="LinkButton-Danger" style={{ position: "absolute", top: "0.25rem", right: "0.25rem", fontSize: "0.7rem" }}>Delete</div>
+                            <div className="LinkButton-Danger" onClick={deletePost} style={{ position: "absolute", top: "0.25rem", right: "0.25rem", fontSize: "0.7rem" }}>Delete</div>
                             <textarea onChange={handleInput} value={editInput} className="textarea" />
                             <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
                         </>
@@ -96,7 +113,7 @@ const ExpandedPost = props => {
                 </div>
                 <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
                     <div>
-                        {`${postData.username}, ${postData.date}`}
+                        {`${postData.username}, ${postData.date}${postData.isEdited ? " (Edited)" : ""}`}
                     </div>
                     <div>
                         {(userData.userID === postData.userID || userData.access === "Admin") &&
