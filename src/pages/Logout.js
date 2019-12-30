@@ -4,14 +4,19 @@ import { withCookies } from 'react-cookie'
 import { toast } from 'react-toastify'
 
 const Logout = ({ cookies, ...props }) => {
+    const cookieState = document.cookie
     const [cookieCleared, setCookieCleared] = useState(false)
 
     useEffect(() => {
-        try {
-            cookies.remove('token')
-            setCookieCleared(true)
-        } catch { }
+        cookies.remove('token')
     }, [cookies])
+
+    useEffect(() => {
+        if (cookies.get('token'))
+            cookies.remove('token')
+        else
+            setCookieCleared(true)
+    }, [cookieState, cookies])
 
     useEffect(() => {
         if (cookieCleared)

@@ -1,5 +1,6 @@
 import React from 'react'
 import Linkify from 'react-linkify'
+import { Link } from 'react-router-dom'
 
 import '../components/css/LinkButton.css'
 
@@ -18,7 +19,10 @@ const Post = props => {
             </div>
             <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
                 <div>
-                    {`Posted by ${username}`}
+                    {!props.hidePostedBy && <>
+                        <div style={{ display: "inline-block" }}>Posted by&nbsp;</div>
+                        <div style={{ display: "inline-block" }} className="LinkButton"><Link to={`/p/${username}`}>{`${username}`}</Link></div>
+                    </>}
                 </div>
                 <div className="LinkButton">Like</div>
             </div>
