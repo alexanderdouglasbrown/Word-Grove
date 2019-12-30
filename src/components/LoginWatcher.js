@@ -7,7 +7,7 @@ import UserContext from '../UserContext'
 // Handles setting globals for logins
 const LoginWatcher = ({ cookies }) => {
     const cookieToken = cookies.get('token')
-    const [, globalSetIsLoggedIn, globalSetUsername] = useContext(UserContext)
+    const [, globalSetIsLoggedIn, globalSetUsername, globalSetUserID, globalSetAccess, globalSetToken] = useContext(UserContext)
 
     useEffect(() => {
         let token = null
@@ -19,14 +19,20 @@ const LoginWatcher = ({ cookies }) => {
             if (token.exp > (Date.now() / 1000)) {
                 globalSetIsLoggedIn(true)
                 globalSetUsername(token["Username"])
+                globalSetUserID(Number(token["UserID"]))
+                globalSetAccess(token["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
+                globalSetToken(cookieToken)
             } else {
                 cookies.remove('token')
             }
         } else {
             globalSetIsLoggedIn(false)
             globalSetUsername("")
+            globalSetUserID(null)
+            globalSetAccess("User")
+            globalSetToken(null)
         }
-    }, [cookies, cookieToken, globalSetIsLoggedIn, globalSetUsername])
+    }, [cookies, cookieToken, globalSetIsLoggedIn, globalSetUsername, globalSetUserID, globalSetAccess, globalSetToken])
 
     return <></>
 }
