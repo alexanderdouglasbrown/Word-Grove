@@ -18,6 +18,10 @@ const Post = props => {
     const { postID, isExpanded, expandPost, refreshIndex, setRefreshIndex } = props
     const [postData, setPostData] = useState(null)
 
+    const [totalLikes, setTotalLikes] = useState(null)
+    const [isUserLiked, setIsUserLiked] = useState(null)
+    const [/*totalComments*/, setTotalComments] = useState(null)
+
     const [isEditMode, setIsEditMode] = useState(false)
     const [editInput, setEditInput] = useState("")
     const [characterCounter, setCharacterCounter] = useState(maxCharacters)
@@ -31,9 +35,12 @@ const Post = props => {
 
     const refreshPost = useCallback((forcedRefresh) => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/post`,
-            { params: { ID: postID } })
+            { params: { ID: postID }, headers: {Authorization: userData.token} })
             .then(res => {
-                setPostData(res.data)
+                setPostData(res.data.post)
+                setTotalLikes(res.data.totalLikes)
+                setTotalComments(res.data.totalComments)
+                setIsUserLiked(res.data.isUserLiked)
             })
             .catch(err => {
                 if (err && err.response && err.response.data && err.response.data.notFound) {
@@ -49,7 +56,7 @@ const Post = props => {
                     toast.error("Sorry, an error occured")
                 }
             })
-    }, [postID])
+    }, [postID, userData])
 
     const handleInput = e => {
         let text = e.target.value
@@ -168,7 +175,12 @@ const Post = props => {
                         <div>{`, ${postData.date}${postData.isEdited ? " (Edited)" : ""}`}</div>
                     </div>
 
-                    <Like postID={postID} />
+                    <Like
+                        postID={postID}
+                        totalLikes={totalLikes}
+                        isUserLiked={isUserLiked}
+                        refresh={refreshPost}
+                    />
                 </div>
             </div>
             :

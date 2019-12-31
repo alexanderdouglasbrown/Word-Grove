@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Redirect } from 'react-router-dom'
 import { withCookies } from 'react-cookie'
 import { toast } from 'react-toastify'
 
 const Logout = ({ cookies, ...props }) => {
-    const cookieState = document.cookie
+    const cookieState = useRef(document.cookie)
     const [cookieCleared, setCookieCleared] = useState(false)
 
     useEffect(() => {
