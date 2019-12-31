@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
 import Linkify from 'react-linkify'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+
+import Like from '../components/Like'
 
 import UserContext from '../UserContext'
 
@@ -19,6 +21,8 @@ const Post = props => {
     const [isEditMode, setIsEditMode] = useState(false)
     const [editInput, setEditInput] = useState("")
     const [characterCounter, setCharacterCounter] = useState(maxCharacters)
+
+    const [isPostDeleted, setIsPostDeleted] = useState(false)
 
     const expandPostClicked = e => {
         if (e.target && e.target.tagName && e.target.tagName.toLowerCase() !== "a")
@@ -63,16 +67,17 @@ const Post = props => {
     }
 
     useEffect(() => {
-        if (!postData)
+        if (!postData && !isPostDeleted)
             refreshPost()
-    }, [refreshPost, postData])
+    }, [refreshPost, postData, isPostDeleted])
 
     const deletePost = () => {
         if (window.confirm("Are you sure you would like to delete this post?")) {
             axios.delete(`${process.env.REACT_APP_API_URL}/api/post`,
                 { data: { ID: postID }, headers: { Authorization: userData.token } })
                 .then(() => {
-                    // TODO return nothing I guess
+                    setIsPostDeleted(true)
+                    setPostData(null)
                 })
                 .catch(err => {
                     if (err && err.response && err.response.data && err.response.data.error)
@@ -99,31 +104,12 @@ const Post = props => {
             })
     }
 
-
     return <>
         {postData ?
             <div className="card" style={{ margin: "1rem auto" }}>
-                {isExpanded ?
-                    <div className="card-content">
-                        {isEditMode ?
-                            <>
-                                <div className="LinkButton-Danger" onClick={deletePost} style={{ position: "absolute", top: "0.25rem", right: "0.25rem", fontSize: "0.7rem" }}>Delete</div>
-                                <textarea onChange={handleInput} value={editInput} className="textarea" />
-                                <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
-                            </>
-                            :
-                            <Linkify>{postData.post}</Linkify>
-                        }
-                    </div>
-                    :
-                    <div className="card-content" style={{ whiteSpace: "pre-wrap", cursor: "pointer" }} onClick={expandPostClicked}>
-                        <Linkify>{postData.post}</Linkify>
-                    </div>
-                }
-
-                <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
+                <div className="card-content">
                     {(userData.userID === postData.userID || userData.access === "Admin") &&
-                        <>
+                        <div style={{ position: "absolute", top: "0.25rem", right: "0.25rem", fontSize: "0.7rem" }}>
                             {isEditMode ?
                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                                     <div className="LinkButton" onClick={cancelEdit}>Cancel</div>
@@ -133,23 +119,48 @@ const Post = props => {
                                 :
                                 <div className="LinkButton" onClick={startEdit}>Edit</div>
                             }
+                        </div>
+                    }
+                    {isEditMode ?
+                        <>
+                            <div className="LinkButton-Danger" onClick={deletePost} style={{ position: "absolute", top: "0.25rem", left: "0.25rem", fontSize: "0.7rem" }}>Delete</div>
+                            <textarea onChange={handleInput} value={editInput} className="textarea" />
+                            <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
+                        </>
+                        :
+                        <>
+                            {isExpanded ?
+                                <Linkify>{postData.post}</Linkify>
+                                :
+                                <div style={{ whiteSpace: "pre-wrap", cursor: "pointer" }} onClick={expandPostClicked}>
+                                    <Linkify>{postData.post}</Linkify>
+                                </div>
+                            }
                         </>
                     }
-                    {/* <div>
-                    {!props.hidePostedBy && <>
-                        <div style={{ display: "inline-block" }}>Posted by&nbsp;</div>
-                        <div style={{ display: "inline-block" }} className="LinkButton"><Link to={`/p/${username}`}>{`${username}`}</Link></div>
-                    </>}
                 </div>
-                <div className="LinkButton">Like</div> */}
+                <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
+                    <div>
+                        <div style={{ display: "inline-block" }}>Posted by&nbsp;</div>
+                        <div style={{ display: "inline-block" }} className="LinkButton"><Link to={`/p/${postData.username}`}>{`${postData.username}`}</Link></div>
+                    </div>
+
+                    <Like />
                 </div>
             </div>
             :
-            <div className="card" style={{ margin: "1rem auto" }}>
-                <div className="card-content">
-                    <progress className="progress is-small is-light" max="100"></progress>
-                </div>
-            </div>
+            <>
+                {isPostDeleted ?
+                    null
+                    :
+                    <div className="card" style={{ margin: "1rem auto" }}>
+                        <div className="card-content">
+                            <progress className="progress is-small is-light" max="100"></progress>
+                        </div>
+                    </div>
+                }
+            </>
+
         }
     </>
 }
