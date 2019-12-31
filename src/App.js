@@ -29,7 +29,7 @@ const App = () => {
         <NavBar />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/wh/:id" exact component={PostPage} />
+          <Route path="/wh/:postID" exact component={PostPage} />
           <Route path="/p/:username" exact component={Profile} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />

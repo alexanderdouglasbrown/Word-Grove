@@ -5,14 +5,14 @@ import ExpandedPost from '../components/ExpandedPost'
 
 const PostPage = props => {
     const history = useHistory()
-    const { id } = useParams()
+    const { postID } = useParams()
 
     const postDeleted = () => {
         history.push("/")
     }
 
     return <div className="container">
-        <ExpandedPost id={id} postDeleted={postDeleted} postEdited={()=>{}} />
+        <ExpandedPost postID={postID} onPostDelete={postDeleted} />
     </div>
 }
 

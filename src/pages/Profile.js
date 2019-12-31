@@ -9,15 +9,16 @@ import PostModal from '../components/PostModal'
 const Profile = props => {
     const { username } = useParams()
     const [profileData, setProfileData] = useState(null)
-    const [postData, setPostData] = useState(null)
+    const [postIDs, setPostIDs] = useState(null)
 
     const [isPostModalVisible, setIsPostModalVisible] = useState(false)
     const [selectedPostID, setSelectedPostID] = useState(null)
+    const [refreshIndex, setRefreshIndex] = useState(null)
 
     const refreshPosts = useCallback(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/profile/posts`,
             { params: { UserID: profileData.userID } })
-            .then(res => setPostData(res.data))
+            .then(res => setPostIDs(res.data))
             .catch(err => {
                 if (err && err.response && err.response.data && err.response.data.error)
                     toast.error(err.response.data.error)
@@ -28,6 +29,7 @@ const Profile = props => {
 
     const closePostModal = () => {
         setIsPostModalVisible(false)
+        setRefreshIndex(selectedPostID)
         setSelectedPostID(null)
         window.history.replaceState(null, null, `/p/${username}`)
     }
@@ -60,23 +62,22 @@ const Profile = props => {
         <div className="container">
             {profileData &&
                 <>
-                    <h5 style={{textAlign: "center"}} className="title">{`${profileData.username}'s Posts`}</h5>
+                    <h5 style={{ textAlign: "center" }} className="title">{`${profileData.username}'s Posts`}</h5>
                     <>
                         {profileData.access !== "User" &&
-                            <h5 style={{textAlign: "center"}} className="subtitle">{profileData.access}</h5>
+                            <h5 style={{ textAlign: "center" }} className="subtitle">{profileData.access}</h5>
                         }
                     </>
                 </>
             }
-            {postData &&
-                <>
-                    {postData.map(postData => <Post
-                        key={postData.id}
-                        postData={postData}
-                        expandPost={openPostModal}
-                        hidePostedBy
-                    />)}
-                </>
+            {postIDs &&
+                postIDs.map(postID => <Post
+                    key={postID}
+                    postID={postID}
+                    expandPost={openPostModal}
+                    refreshIndex={refreshIndex}
+                    setRefreshIndex={setRefreshIndex}
+                />)
             }
         </div>
         <PostModal
