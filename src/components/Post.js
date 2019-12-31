@@ -38,8 +38,8 @@ const Post = props => {
             .catch(err => {
                 if (err && err.response && err.response.data && err.response.data.notFound) {
                     if (forcedRefresh) {
-                        setPostData(null)
                         setIsPostDeleted(true)
+                        setPostData(null)
                     }
                     else {
                         toast.error("Post not found")
@@ -80,11 +80,11 @@ const Post = props => {
     }, [refreshPost, postData, isPostDeleted])
 
     useEffect(() => {
-        if (refreshIndex === postID) {
+        if (!isPostDeleted && refreshIndex === postID) {
             refreshPost(true)
             setRefreshIndex(null)
         }
-    }, [refreshIndex, postID, refreshPost, setRefreshIndex])
+    }, [refreshIndex, postID, refreshPost, setRefreshIndex, isPostDeleted])
 
     const deletePost = () => {
         if (window.confirm("Are you sure you would like to delete this post?")) {
@@ -151,7 +151,9 @@ const Post = props => {
                         :
                         <>
                             {isExpanded ?
-                                <Linkify>{postData.post}</Linkify>
+                                <div style={{ whiteSpace: "pre-wrap" }}>
+                                    <Linkify>{postData.post}</Linkify>
+                                </div>
                                 :
                                 <div style={{ whiteSpace: "pre-wrap", cursor: "pointer" }} onClick={expandPostClicked}>
                                     <Linkify>{postData.post}</Linkify>
@@ -161,9 +163,9 @@ const Post = props => {
                     }
                 </div>
                 <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
-                    <div>
-                        <div style={{ display: "inline-block" }}>Posted by&nbsp;</div>
-                        <div style={{ display: "inline-block" }} className="LinkButton"><Link to={`/p/${postData.username}`}>{`${postData.username}`}</Link></div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div className="LinkButton"><Link to={`/p/${postData.username}`}>{`${postData.username}`}</Link></div>
+                        <div>{`, ${postData.date}${postData.isEdited ? " (Edited)" : ""}`}</div>
                     </div>
 
                     <Like />
