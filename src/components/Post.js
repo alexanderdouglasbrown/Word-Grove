@@ -15,7 +15,7 @@ const Post = props => {
 
     const [userData] = useContext(UserContext)
 
-    const { postID, isExpanded } = props
+    const { postID, isExpanded, expandPost, refreshIndex, setRefreshIndex } = props
     const [postData, setPostData] = useState(null)
 
     const [isEditMode, setIsEditMode] = useState(false)
@@ -26,20 +26,28 @@ const Post = props => {
 
     const expandPostClicked = e => {
         if (e.target && e.target.tagName && e.target.tagName.toLowerCase() !== "a")
-            props.expandPost(postID)
+            expandPost(postID)
     }
 
-    const refreshPost = useCallback(() => {
+    const refreshPost = useCallback((forcedRefresh) => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/post`,
             { params: { ID: postID } })
             .then(res => {
                 setPostData(res.data)
             })
             .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
+                if (err && err.response && err.response.data && err.response.data.notFound) {
+                    if (forcedRefresh) {
+                        setPostData(null)
+                        setIsPostDeleted(true)
+                    }
+                    else {
+                        toast.error("Post not found")
+                    }
+                }
+                else {
                     toast.error("Sorry, an error occured")
+                }
             })
     }, [postID])
 
@@ -71,6 +79,13 @@ const Post = props => {
             refreshPost()
     }, [refreshPost, postData, isPostDeleted])
 
+    useEffect(() => {
+        if (refreshIndex === postID) {
+            refreshPost(true)
+            setRefreshIndex(null)
+        }
+    }, [refreshIndex, postID, refreshPost, setRefreshIndex])
+
     const deletePost = () => {
         if (window.confirm("Are you sure you would like to delete this post?")) {
             axios.delete(`${process.env.REACT_APP_API_URL}/api/post`,
@@ -78,6 +93,9 @@ const Post = props => {
                 .then(() => {
                     setIsPostDeleted(true)
                     setPostData(null)
+
+                    if (props.onDelete)
+                        props.onDelete()
                 })
                 .catch(err => {
                     if (err && err.response && err.response.data && err.response.data.error)
@@ -95,6 +113,9 @@ const Post = props => {
                 refreshPost()
                 cancelEdit()
                 refreshPost()
+
+                if (props.onEdit)
+                    props.onEdit()
             })
             .catch(err => {
                 if (err && err.response && err.response.data && err.response.data.error)

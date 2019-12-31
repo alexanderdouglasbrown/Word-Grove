@@ -16,6 +16,7 @@ const Home = props => {
 
     const [isPostModalVisible, setIsPostModalVisible] = useState(false)
     const [selectedPostID, setSelectedPostID] = useState(null)
+    const [refreshIndex, setRefreshIndex] = useState(null)
 
     const getPostIDs = useRef()
     const isFetching = useRef(false)
@@ -49,6 +50,7 @@ const Home = props => {
 
     const closePostModal = () => {
         setIsPostModalVisible(false)
+        setRefreshIndex(selectedPostID)
         setSelectedPostID(null)
         window.history.replaceState(null, null, '/')
     }
@@ -103,7 +105,13 @@ const Home = props => {
                             <PostBox refreshPosts={refreshPosts} />
                         }
                         {postIDs &&
-                            postIDs.map(postID => <Post key={postID} postID={postID} expandPost={openPostModal} />)
+                            postIDs.map(postID => <Post
+                                key={postID}
+                                postID={postID}
+                                expandPost={openPostModal}
+                                refreshIndex={refreshIndex}
+                                setRefreshIndex={setRefreshIndex}
+                            />)
                         }
                     </>
                 </div>

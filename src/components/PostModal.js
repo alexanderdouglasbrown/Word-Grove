@@ -6,15 +6,10 @@ import ExpandedPost from '../components/ExpandedPost'
 Modal.setAppElement('#root');
 
 const PostModal = props => {
-    const { isOpen, closeModal, postID, refresh } = props
+    const { isOpen, closeModal, postID } = props
 
-    const postDeleted = () => {
+    const onPostDelete = () => {
         closeModal()
-        refresh()
-    }
-
-    const postEdited = () => {
-        refresh()
     }
 
     return <Modal
@@ -34,7 +29,9 @@ const PostModal = props => {
         }}
     >
         <div className="container">
-            <ExpandedPost id={postID} postDeleted={postDeleted} postEdited={postEdited} />
+            <ExpandedPost
+            postID={postID}
+            onPostDelete={onPostDelete} />
         </div>
     </Modal>
 }
