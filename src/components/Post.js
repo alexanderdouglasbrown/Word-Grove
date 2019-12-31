@@ -168,7 +168,7 @@ const Post = props => {
                         <div>{`, ${postData.date}${postData.isEdited ? " (Edited)" : ""}`}</div>
                     </div>
 
-                    <Like />
+                    <Like postID={postID} />
                 </div>
             </div>
             :
