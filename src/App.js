@@ -6,6 +6,7 @@ import { UserProvider } from './UserContext'
 import Home from './pages/Home'
 import PostPage from './pages/PostPage'
 import Profile from './pages/Profile'
+import Settings from './pages/Settings'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/" exact component={Home} />
           <Route path="/wh/:postID" exact component={PostPage} />
           <Route path="/p/:username" exact component={Profile} />
+          <Route path="/settings" exact component={Settings} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
           <Route path="/logout" exact component={Logout} />

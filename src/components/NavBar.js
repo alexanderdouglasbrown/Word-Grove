@@ -41,6 +41,7 @@ const NavBar = () => {
 
                             <div className="navbar-dropdown">
                                 <Link className="navbar-item" to={`/p/${userData.username}`}>Profile</Link>
+                                <Link className="navbar-item" to={`/settings`}>Settings</Link>
                                 <hr className="navbar-divider" />
                                 <Link className="navbar-item" to={"/logout"}>Log Out</Link>
                             </div>

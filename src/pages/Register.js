@@ -47,7 +47,7 @@ const Register = props => {
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="username" className="label">Username</label>
                             <div className="field">
-                                <p className="control has-icons-left has-icons-right">
+                                <p className="control has-icons-left">
                                     <input value={username} onChange={e => setUsername(e.target.value)} className="input" type="text" name="username" placeholder="Username" autoFocus required />
                                     <span className="icon is-small is-left">
                                         <FontAwesomeIcon icon={faUser} />
