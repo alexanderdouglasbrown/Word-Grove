@@ -54,6 +54,7 @@ const ExpandedPost = props => {
             commentIDs.map(commentID => <Comment
                 key={commentID}
                 commentID={commentID}
+                refreshComments={refreshComments}
             />)
         }
     </>

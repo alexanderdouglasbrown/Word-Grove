@@ -20,7 +20,7 @@ const Post = props => {
 
     const [totalLikes, setTotalLikes] = useState(null)
     const [isUserLiked, setIsUserLiked] = useState(null)
-    const [/*totalComments*/, setTotalComments] = useState(null)
+    const [totalComments, setTotalComments] = useState(null)
 
     const [isEditMode, setIsEditMode] = useState(false)
     const [editInput, setEditInput] = useState("")
@@ -123,7 +123,6 @@ const Post = props => {
         axios.patch(`${process.env.REACT_APP_API_URL}/api/post`,
             { ID: postID, Post: editInput }, { headers: { Authorization: userData.token } })
             .then(() => {
-                refreshPost()
                 cancelEdit()
                 refreshPost()
 
@@ -176,17 +175,22 @@ const Post = props => {
                     }
                 </div>
                 <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <div>
+                        <div>{`${postData.date}${postData.isEdited ? " (Edited)" : ""}`}</div>
                         <div className="LinkButton"><Link to={`/p/${postData.username}`}>{`${postData.username}`}</Link></div>
-                        <div>{`, ${postData.date}${postData.isEdited ? " (Edited)" : ""}`}</div>
                     </div>
 
-                    <Like
-                        postID={postID}
-                        totalLikes={totalLikes}
-                        isUserLiked={isUserLiked}
-                        refresh={refreshPost}
-                    />
+                    <div>
+                        <Like
+                            postID={postID}
+                            totalLikes={totalLikes}
+                            isUserLiked={isUserLiked}
+                            refresh={refreshPost}
+                        />
+                        {!isExpanded &&
+                            <div className="LinkButton" style={{ width: "5.5rem" }} onClick={expandPostClicked}>{`Comments${totalComments && totalComments > 0 ? ` (${totalComments})` : ""}`}</div>
+                        }
+                    </div>
                 </div>
             </div>
             :

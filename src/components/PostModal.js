@@ -18,8 +18,8 @@ const PostModal = props => {
         style={{
             content: {
                 padding: "2rem",
-                maxWidth: "50rem",
-                maxhHeight: "100%",
+                maxWidth: "60rem",
+                maxHeight: "100%",
                 margin: "auto"
             },
             overlay: {
