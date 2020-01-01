@@ -2,7 +2,7 @@
   "name": "word-hole",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://alexanderdouglasbrown.github.io/Word-Hole/",
+  "homepage": "https://wordhole.net",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-regular-svg-icons": "^5.12.0",
