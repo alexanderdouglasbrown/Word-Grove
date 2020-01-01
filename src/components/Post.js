@@ -29,13 +29,19 @@ const Post = props => {
     const [isPostDeleted, setIsPostDeleted] = useState(false)
 
     const expandPostClicked = e => {
+        if (isEditMode || isExpanded)
+            return
+
         if (e.target && e.target.tagName && e.target.tagName.toLowerCase() !== "a")
             expandPost(postID)
     }
 
     const refreshPost = useCallback((forcedRefresh) => {
+        if (postID === null)
+            return
+
         axios.get(`${process.env.REACT_APP_API_URL}/api/post`,
-            { params: { ID: postID }, headers: {Authorization: userData.token} })
+            { params: { ID: postID }, headers: { Authorization: userData.token } })
             .then(res => {
                 setPostData(res.data.post)
                 setTotalLikes(res.data.totalLikes)
@@ -82,9 +88,9 @@ const Post = props => {
     }
 
     useEffect(() => {
-        if (!postData && !isPostDeleted)
+        if (!postData && !isPostDeleted && postID !== null)
             refreshPost()
-    }, [refreshPost, postData, isPostDeleted])
+    }, [refreshPost, postData, isPostDeleted, postID])
 
     useEffect(() => {
         if (!isPostDeleted && refreshIndex === postID) {
@@ -135,20 +141,20 @@ const Post = props => {
     return <>
         {postData ?
             <div className="card" style={{ margin: "1rem auto" }}>
-                <div className="card-content">
-                    {(userData.userID === postData.userID || userData.access === "Admin") &&
-                        <div style={{ position: "absolute", top: "0.25rem", right: "0.25rem", fontSize: "0.7rem" }}>
-                            {isEditMode ?
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                    <div className="LinkButton" onClick={cancelEdit}>Cancel</div>
-                                    <div style={{ width: "0.5rem" }}></div>
-                                    <div className="LinkButton" onClick={saveEdit} style={{ fontWeight: 700 }}>Save</div>
-                                </div>
-                                :
-                                <div className="LinkButton" onClick={startEdit}>Edit</div>
-                            }
-                        </div>
-                    }
+                {(userData.userID === postData.userID || userData.access === "Admin") &&
+                    <div style={{ position: "absolute", top: "0.25rem", right: "0.25rem", fontSize: "0.7rem" }}>
+                        {isEditMode ?
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <div className="LinkButton" onClick={cancelEdit}>Cancel</div>
+                                <div style={{ width: "0.5rem" }}></div>
+                                <div className="LinkButton" onClick={saveEdit} style={{ fontWeight: 700 }}>Save</div>
+                            </div>
+                            :
+                            <div className="LinkButton" onClick={startEdit}>Edit</div>
+                        }
+                    </div>
+                }
+                <div className="card-content" style={{ cursor: `${isExpanded || isEditMode ? "auto" : "pointer"}` }} onClick={expandPostClicked}>
                     {isEditMode ?
                         <>
                             <div className="LinkButton-Danger" onClick={deletePost} style={{ position: "absolute", top: "0.25rem", left: "0.25rem", fontSize: "0.7rem" }}>Delete</div>
@@ -162,7 +168,7 @@ const Post = props => {
                                     <Linkify>{postData.post}</Linkify>
                                 </div>
                                 :
-                                <div style={{ whiteSpace: "pre-wrap", cursor: "pointer" }} onClick={expandPostClicked}>
+                                <div style={{ whiteSpace: "pre-wrap" }}>
                                     <Linkify>{postData.post}</Linkify>
                                 </div>
                             }
