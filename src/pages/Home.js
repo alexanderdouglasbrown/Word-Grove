@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback, useRef } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import noScroll from 'no-scroll'
 
 import UserContext from '../UserContext'
 
@@ -95,6 +96,13 @@ const Home = props => {
         if (postIDs && postIDs.length > 0 && window.innerHeight > document.documentElement.offsetHeight)
             handleScroll()
     }, [postIDs, handleScroll])
+
+    useEffect(() => {
+        if (isPostModalVisible)
+            noScroll.on()
+        else
+            noScroll.off()
+    }, [isPostModalVisible])
 
     return <>
         {sayHi ?
