@@ -17,10 +17,13 @@ const PostModal = props => {
         onRequestClose={closeModal}
         style={{
             content: {
-                padding: "2rem",
+                padding: "1rem 0 0 0",
                 maxWidth: "60rem",
-                maxHeight: "100%",
-                margin: "auto"
+                margin: "auto",
+                top: 0,
+                bottom: 0,
+                left: "1rem",
+                right: "1rem"
             },
             overlay: {
                 zIndex: 35,
