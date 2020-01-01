@@ -139,7 +139,7 @@ const Post = props => {
 
     return <>
         {postData ?
-            <div className="card" style={{ margin: "1rem auto" }}>
+            <div className="card" style={{ margin: "1rem auto", overflowX: "auto" }}>
                 {(userData.userID === postData.userID || userData.access === "Admin") &&
                     <div style={{ position: "absolute", top: "0.25rem", right: "0.25rem", fontSize: "0.7rem" }}>
                         {isEditMode ?

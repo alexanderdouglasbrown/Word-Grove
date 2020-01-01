@@ -32,13 +32,13 @@ const Profile = props => {
         setIsPostModalVisible(false)
         setRefreshIndex(selectedPostID)
         setSelectedPostID(null)
-        window.history.replaceState(null, null, `/p/${username}`)
+        window.history.pushState(null, null, `/p/${username}`)
     }
 
     const openPostModal = postID => {
         setSelectedPostID(postID)
         setIsPostModalVisible(true)
-        window.history.replaceState(null, null, `/wh/${postID}`)
+        window.history.pushState(null, null, `/wh/${postID}`)
     }
 
     useEffect(() => {
