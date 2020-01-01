@@ -23,7 +23,7 @@ toast.configure({
 
 const App = () => {
   return (
-    <BrowserRouter basename={process.env.REACT_APP_BASE_NAME}>
+    <BrowserRouter>
       <UserProvider>
         <LoginWatcher />
         <NavBar />
