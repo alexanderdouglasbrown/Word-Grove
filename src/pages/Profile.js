@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import noScroll from 'no-scroll'
 
 import Post from '../components/Post'
 import PostModal from '../components/PostModal'
@@ -57,6 +58,15 @@ const Profile = props => {
             refreshPosts()
         }
     }, [profileData, refreshPosts])
+
+    useEffect(() => {
+        if (isPostModalVisible)
+            noScroll.on()
+        else
+            noScroll.off()
+            
+        return () => noScroll.off()
+    }, [isPostModalVisible])
 
     return <>
         <div className="container">

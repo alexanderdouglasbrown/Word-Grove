@@ -102,6 +102,8 @@ const Home = props => {
             noScroll.on()
         else
             noScroll.off()
+            
+        return () => noScroll.off()
     }, [isPostModalVisible])
 
     return <>

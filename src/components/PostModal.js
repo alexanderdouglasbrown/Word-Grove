@@ -22,8 +22,9 @@ const PostModal = props => {
                 margin: "auto",
                 top: 0,
                 bottom: 0,
-                left: "1rem",
-                right: "1rem"
+                left: "1.5rem",
+                right: "1.5rem",
+                overflowX: "hidden"
             },
             overlay: {
                 zIndex: 35,
