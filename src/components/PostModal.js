@@ -17,7 +17,7 @@ const PostModal = props => {
         onRequestClose={closeModal}
         style={{
             content: {
-                padding: "1rem 0 0 0",
+                padding: "1rem 0 1rem 0",
                 maxWidth: "60rem",
                 margin: "auto",
                 top: "0.5rem",
