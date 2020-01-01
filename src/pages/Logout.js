@@ -27,7 +27,14 @@ const Logout = ({ cookies, ...props }) => {
         {cookieCleared ?
             <Redirect to="/" />
             :
-            <>Loggin out...</>}
+            <>
+                <div>
+                    Logging out...
+                </div>
+                <div style={{ fontSize: "0.8rem", color: "gray" }}>
+                    Refresh if this gets stuck, sorry
+                </div>
+            </>}
     </>
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react'
 import axios from 'axios'
+import Linkify from 'react-linkify'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -99,9 +100,9 @@ const Comment = props => {
                                 <textarea onChange={e => setEditInput(e.target.value)} value={editInput} className="textarea" />
                             </>
                             :
-                            <>
+                            <Linkify>
                                 {`${commentData.comment}`}
-                            </>
+                            </Linkify>
                         }
 
                     </div>

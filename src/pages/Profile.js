@@ -77,6 +77,7 @@ const Profile = props => {
                     expandPost={openPostModal}
                     refreshIndex={refreshIndex}
                     setRefreshIndex={setRefreshIndex}
+                    isProfile
                 />)
             }
         </div>

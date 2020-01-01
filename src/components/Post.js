@@ -15,7 +15,7 @@ const Post = props => {
 
     const [userData] = useContext(UserContext)
 
-    const { postID, isExpanded, expandPost, refreshIndex, setRefreshIndex } = props
+    const { postID, isExpanded, isProfile, expandPost, refreshIndex, setRefreshIndex } = props
     const [postData, setPostData] = useState(null)
 
     const [totalLikes, setTotalLikes] = useState(null)
@@ -177,7 +177,11 @@ const Post = props => {
                 <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
                     <div>
                         <div>{`${postData.date}${postData.isEdited ? " (Edited)" : ""}`}</div>
-                        <div className="LinkButton"><Link to={`/p/${postData.username}`}>{`${postData.username}`}</Link></div>
+                        {isProfile ?
+                            <div>{`${postData.username}`}</div>
+                            :
+                            <div className="LinkButton"><Link to={`/p/${postData.username}`}>{`${postData.username}`}</Link></div>
+                        }
                     </div>
 
                     <div>
