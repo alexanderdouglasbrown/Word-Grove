@@ -20,10 +20,10 @@ const PostModal = props => {
                 padding: "1rem 0 0 0",
                 maxWidth: "60rem",
                 margin: "auto",
-                top: 0,
-                bottom: 0,
-                left: "1.5rem",
-                right: "1.5rem",
+                top: "0.5rem",
+                bottom: "0.5rem",
+                left: "2rem",
+                right: "2rem",
                 overflowX: "hidden"
             },
             overlay: {
