@@ -36,7 +36,7 @@ const ExpandedPost = props => {
             refreshComments()
     }, [commentIDs, refreshComments])
 
-    return <>
+    return <div style={{overflowX: "hidden"}}>
         <Post
             postID={postID}
             isExpanded
@@ -57,7 +57,7 @@ const ExpandedPost = props => {
                 refreshComments={refreshComments}
             />)
         }
-    </>
+    </div>
 }
 
 export default ExpandedPost

@@ -23,8 +23,7 @@ const PostModal = props => {
                 top: "0.5rem",
                 bottom: "0.5rem",
                 left: "1.75rem",
-                right: "1.75rem",
-                overflowX: "hidden"
+                right: "1.75rem"
             },
             overlay: {
                 zIndex: 35,
