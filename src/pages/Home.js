@@ -63,14 +63,14 @@ const Home = props => {
     }
 
     const sendHello = useCallback(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/home/hi`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/home/hi`, { setTimeout: 1000 })
             .then(() => {
                 setSayHi(true)
             })
             .catch(() => {
                 setSayHi(false)
                 // If an error occurred, it is likely because my free Heroku dyno hasn't spun up yet, so keep spamming until it does
-                setTimeout(() => { sendHello() }, 1000)
+                sendHello()
             })
     }, [])
 
@@ -102,7 +102,7 @@ const Home = props => {
             noScroll.on()
         else
             noScroll.off()
-            
+
         return () => noScroll.off()
     }, [isPostModalVisible])
 
