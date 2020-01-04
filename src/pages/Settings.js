@@ -80,7 +80,7 @@ const Settings = props => {
                             </div>
                             <div className="field">
                                 <p className="control">
-                                    <button type="submit" className="button is-primary">Register</button>
+                                    <button type="submit" className="button is-primary">Update</button>
                                 </p>
                             </div>
                         </form>
