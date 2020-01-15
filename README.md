@@ -1,3 +1,3 @@
 # Word Hole
 
-A site for putting your words on the internet!
+A site for sharing your words on the internet!
