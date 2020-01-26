@@ -64,7 +64,7 @@ const Profile = props => {
             noScroll.on()
         else
             noScroll.off()
-            
+
         return () => noScroll.off()
     }, [isPostModalVisible])
 

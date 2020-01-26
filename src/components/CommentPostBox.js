@@ -16,7 +16,7 @@ const CommentPostBox = props => {
             {
                 headers: { Authorization: userData.token }
             })
-            .then(()=>{
+            .then(() => {
                 setInputText("")
                 refreshComments()
             })

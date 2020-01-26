@@ -33,8 +33,8 @@ const PostModal = props => {
     >
         <div className="container">
             <ExpandedPost
-            postID={postID}
-            onPostDelete={onPostDelete} />
+                postID={postID}
+                onPostDelete={onPostDelete} />
         </div>
     </Modal>
 }
