@@ -9,7 +9,6 @@ const Logout = props => {
 
     useEffect(() => {
         if (userData.token) {
-            window.localStorage.removeItem('token')
             setToken(null)
             toast.info("You have been logged out")
         }

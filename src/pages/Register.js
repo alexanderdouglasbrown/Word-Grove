@@ -25,7 +25,6 @@ const Register = props => {
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/register`, { username, password, Confirm: confirmPassword })
             .then(res => {
-                window.localStorage.setItem('token', res.data.jwt)
                 setToken(res.data.jwt)
                 setRedirect(true)
             })

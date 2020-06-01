@@ -16,6 +16,8 @@ export const UserProvider = props => {
         setUserID(null)
         setAccess("User")
         setToken(null)
+
+        window.localStorage.removeItem('token')
     }
 
     useEffect(() => {
@@ -26,8 +28,10 @@ export const UserProvider = props => {
                 setUsername(decodedToken["Username"])
                 setUserID(Number(decodedToken["UserID"]))
                 setAccess(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
+
+                if (window.localStorage.getItem('token') !== token)
+                    window.localStorage.setItem('token', token)
             } else {
-                window.localStorage.removeItem('token')
                 clearUser()
             }
         } else {

@@ -26,7 +26,6 @@ const Login = props => {
                     return
                 }
 
-                window.localStorage.setItem('token', res.data.jwt)
                 setToken(res.data.jwt)
                 setRedirect(true)
             })
