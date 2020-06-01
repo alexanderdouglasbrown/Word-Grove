@@ -1,41 +1,29 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Redirect } from 'react-router-dom'
-import { withCookies } from 'react-cookie'
 import { toast } from 'react-toastify'
 
-const Logout = ({ cookies, ...props }) => {
-    const cookieState = useRef(document.cookie)
-    const [cookieCleared, setCookieCleared] = useState(false)
+import UserContext from '../UserContext'
+
+const Logout = props => {
+    const [userData, setToken] = useContext(UserContext)
 
     useEffect(() => {
-        cookies.remove('token')
-    }, [cookies])
-
-    useEffect(() => {
-        if (cookies.get('token'))
-            cookies.remove('token')
-        else
-            setCookieCleared(true)
-    }, [cookieState, cookies])
-
-    useEffect(() => {
-        if (cookieCleared)
+        if (userData.token) {
+            window.localStorage.removeItem('token')
+            setToken(null)
             toast.info("You have been logged out")
-    }, [cookieCleared])
+        }
+    }, [userData.token, setToken])
 
     return <>
-        {cookieCleared ?
+        {userData.token ?
             <Redirect to="/" />
             :
-            <>
-                <div>
-                    Logging out...
-                </div>
-                <div style={{ fontSize: "0.8rem", color: "gray" }}>
-                    Refresh if this gets stuck, sorry
-                </div>
-            </>}
+            <div>
+                Logging out...
+            </div>
+        }
     </>
 }
 
-export default withCookies(Logout)
+export default Logout

@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
-import { useCookies } from 'react-cookie'
 import { Redirect } from 'react-router-dom'
+
+import UserContext from '../UserContext'
 
 import './css/LoginRegister.css'
 
 const Register = props => {
+    const [, setToken] = useContext(UserContext)
+
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const [, setCookie] = useCookies(['token'])
     const [redirect, setRedirect] = useState(false)
 
     const handleSubmit = e => {
@@ -23,7 +25,8 @@ const Register = props => {
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/register`, { username, password, Confirm: confirmPassword })
             .then(res => {
-                setCookie('token', res.data.jwt)
+                window.localStorage.setItem('token', res.data.jwt)
+                setToken(res.data.jwt)
                 setRedirect(true)
             })
             .catch(err => {

@@ -13,7 +13,6 @@ import Logout from './pages/Logout'
 import Error404 from './pages/Error404'
 
 import NavBar from './components/NavBar'
-import LoginWatcher from './components/LoginWatcher'
 
 toast.configure({
   hideProgressBar: true,
@@ -25,7 +24,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <UserProvider>
-        <LoginWatcher />
         <NavBar />
         <Switch>
           <Route path="/" exact component={Home} />

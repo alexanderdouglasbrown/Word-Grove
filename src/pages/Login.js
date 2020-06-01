@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
-import { useCookies } from 'react-cookie'
 import { Redirect } from 'react-router-dom'
 
+import UserContext from '../UserContext'
+
 const Login = props => {
+    const [, setToken] = useContext(UserContext)
+    
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
-    const [, setCookie] = useCookies(['token'])
     const [redirect, setRedirect] = useState(false)
 
     const handleSubmit = e => {
@@ -24,7 +26,8 @@ const Login = props => {
                     return
                 }
 
-                setCookie('token', res.data.jwt)
+                window.localStorage.setItem('token', res.data.jwt)
+                setToken(res.data.jwt)
                 setRedirect(true)
             })
             .catch()
