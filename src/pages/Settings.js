@@ -21,7 +21,7 @@ const Settings = props => {
         e.preventDefault()
 
         axios.patch(`${process.env.REACT_APP_API_URL}/api/settings/password`,
-            { Current: currentPassword, New: newPassword, Confirm: confirmPassword }, { headers: { Authorization: userData.token } })
+            { Current: currentPassword, New: newPassword, Confirm: confirmPassword })
             .then(() => {
                 toast.info("Password updated")
                 setCurrentPassword("")

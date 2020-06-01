@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 import jwt_decode from 'jwt-decode'
+import axios from 'axios'
 
 const UserContext = createContext()
 
@@ -18,12 +19,15 @@ export const UserProvider = props => {
         setToken(null)
 
         window.localStorage.removeItem('token')
+        axios.defaults.headers.common['Authorization'] = null;
     }
 
     useEffect(() => {
         if (token) {
             const decodedToken = jwt_decode(token)
             if (decodedToken.exp > (Date.now() / 1000)) {
+                axios.defaults.headers.common['Authorization'] = token;
+
                 setIsLoggedIn(true)
                 setUsername(decodedToken["Username"])
                 setUserID(Number(decodedToken["UserID"]))

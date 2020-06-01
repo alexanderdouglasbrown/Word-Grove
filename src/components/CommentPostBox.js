@@ -1,21 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-import UserContext from '../UserContext'
-
 const CommentPostBox = props => {
     const { postID, refreshComments } = props
-    const [userData] = useContext(UserContext)
 
     const [inputText, setInputText] = useState("")
 
     const handlePost = () => {
         axios.post(`${process.env.REACT_APP_API_URL}/api/comments`,
-            { Comment: inputText, PostID: postID },
-            {
-                headers: { Authorization: userData.token }
-            })
+            { Comment: inputText, PostID: postID })
             .then(() => {
                 setInputText("")
                 refreshComments()

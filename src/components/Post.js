@@ -41,7 +41,7 @@ const Post = props => {
             return
 
         axios.get(`${process.env.REACT_APP_API_URL}/api/post`,
-            { params: { ID: postID }, headers: { Authorization: userData.token } })
+            { params: { ID: postID } })
             .then(res => {
                 setPostData(res.data.post)
                 setTotalLikes(res.data.totalLikes)
@@ -62,7 +62,7 @@ const Post = props => {
                     toast.error("Sorry, an error occured")
                 }
             })
-    }, [postID, userData])
+    }, [postID])
 
     const handleInput = e => {
         let text = e.target.value
@@ -102,7 +102,7 @@ const Post = props => {
     const deletePost = () => {
         if (window.confirm("Are you sure you would like to delete this post?")) {
             axios.delete(`${process.env.REACT_APP_API_URL}/api/post`,
-                { data: { ID: postID }, headers: { Authorization: userData.token } })
+                { data: { ID: postID } })
                 .then(() => {
                     setIsPostDeleted(true)
                     setPostData(null)
@@ -121,7 +121,7 @@ const Post = props => {
 
     const saveEdit = () => {
         axios.patch(`${process.env.REACT_APP_API_URL}/api/post`,
-            { ID: postID, Post: editInput }, { headers: { Authorization: userData.token } })
+            { ID: postID, Post: editInput })
             .then(() => {
                 cancelEdit()
                 refreshPost()

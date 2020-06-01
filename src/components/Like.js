@@ -25,10 +25,7 @@ const Likes = props => {
 
     const deleteLike = () => {
         axios.delete(`${process.env.REACT_APP_API_URL}/api/likes`,
-            {
-                data: { PostID: postID },
-                headers: { Authorization: userData.token }
-            })
+            { data: { PostID: postID } })
             .then(() => {
                 refresh()
             })
@@ -36,9 +33,7 @@ const Likes = props => {
     }
 
     const addLike = () => {
-        axios.put(`${process.env.REACT_APP_API_URL}/api/likes`,
-            { PostID: postID },
-            { headers: { Authorization: userData.token } })
+        axios.put(`${process.env.REACT_APP_API_URL}/api/likes`, { PostID: postID })
             .then(() => {
                 refresh()
             })

@@ -1,12 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-import UserContext from '../UserContext'
-
 const PostBox = props => {
     const maxCharacters = 512
-    const [userData] = useContext(UserContext)
 
     const [inputText, setInputText] = useState("")
     const [characterCounter, setCharacterCounter] = useState(maxCharacters)
@@ -22,9 +19,7 @@ const PostBox = props => {
     }
 
     const handlePost = () => {
-        axios.post(`${process.env.REACT_APP_API_URL}/api/home/post`, { Post: inputText }, {
-            headers: { Authorization: userData.token }
-        })
+        axios.post(`${process.env.REACT_APP_API_URL}/api/home/post`, { Post: inputText })
             .then(() => {
                 setInputText("")
                 setCharacterCounter(maxCharacters)

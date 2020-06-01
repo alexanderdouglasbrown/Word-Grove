@@ -36,7 +36,7 @@ const Comment = props => {
 
     const saveEdit = () => {
         axios.patch(`${process.env.REACT_APP_API_URL}/api/comments`,
-            { CommentID: commentID, Comment: editInput }, { headers: { Authorization: userData.token } })
+            { CommentID: commentID, Comment: editInput })
             .then(() => {
                 refreshComment()
                 cancelEdit()
@@ -58,7 +58,7 @@ const Comment = props => {
     const deleteComment = () => {
         if (window.confirm("Are you sure you would like to delete this comment?")) {
             axios.delete(`${process.env.REACT_APP_API_URL}/api/comments`,
-                { data: { CommentID: commentID }, headers: { Authorization: userData.token } })
+                { data: { CommentID: commentID } })
                 .then(() => {
                     refreshComments()
                 })
