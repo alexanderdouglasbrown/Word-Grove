@@ -23,7 +23,7 @@ const Register = props => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        axios.post(`${process.env.REACT_APP_API_URL}/api/register`, { username, password, Confirm: confirmPassword })
+        axios.post(`/api/register`, { username, password, Confirm: confirmPassword })
             .then(res => {
                 setToken(res.data.jwt)
                 setRedirect(true)

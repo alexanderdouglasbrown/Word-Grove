@@ -19,7 +19,7 @@ const Login = props => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        axios.post(`${process.env.REACT_APP_API_URL}/api/login`, { username, password })
+        axios.post(`/api/login`, { username, password })
             .then(res => {
                 if (res.data.error) {
                     toast.error(res.data.error)

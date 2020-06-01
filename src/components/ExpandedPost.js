@@ -18,7 +18,7 @@ const ExpandedPost = props => {
         if (postID === null)
             return
 
-        axios.get(`${process.env.REACT_APP_API_URL}/api/comments/list`,
+        axios.get(`/api/comments/list`,
             { params: { PostID: postID } })
             .then(res => {
                 setCommentIDs(res.data)

@@ -20,7 +20,7 @@ const Settings = props => {
     const handleSubmit = e => {
         e.preventDefault()
 
-        axios.patch(`${process.env.REACT_APP_API_URL}/api/settings/password`,
+        axios.patch(`/api/settings/password`,
             { Current: currentPassword, New: newPassword, Confirm: confirmPassword })
             .then(() => {
                 toast.info("Password updated")

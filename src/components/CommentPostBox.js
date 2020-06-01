@@ -8,7 +8,7 @@ const CommentPostBox = props => {
     const [inputText, setInputText] = useState("")
 
     const handlePost = () => {
-        axios.post(`${process.env.REACT_APP_API_URL}/api/comments`,
+        axios.post(`/api/comments`,
             { Comment: inputText, PostID: postID })
             .then(() => {
                 setInputText("")

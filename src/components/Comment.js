@@ -16,7 +16,7 @@ const Comment = props => {
     const [editInput, setEditInput] = useState("")
 
     const refreshComment = useCallback(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/comments`,
+        axios.get(`/api/comments`,
             { params: { CommentID: commentID } })
             .then(res => {
                 setCommentData(res.data)
@@ -35,7 +35,7 @@ const Comment = props => {
     }
 
     const saveEdit = () => {
-        axios.patch(`${process.env.REACT_APP_API_URL}/api/comments`,
+        axios.patch(`/api/comments`,
             { CommentID: commentID, Comment: editInput })
             .then(() => {
                 refreshComment()
@@ -57,7 +57,7 @@ const Comment = props => {
 
     const deleteComment = () => {
         if (window.confirm("Are you sure you would like to delete this comment?")) {
-            axios.delete(`${process.env.REACT_APP_API_URL}/api/comments`,
+            axios.delete(`/api/comments`,
                 { data: { CommentID: commentID } })
                 .then(() => {
                     refreshComments()

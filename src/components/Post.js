@@ -40,7 +40,7 @@ const Post = props => {
         if (postID === null)
             return
 
-        axios.get(`${process.env.REACT_APP_API_URL}/api/post`,
+        axios.get(`/api/post`,
             { params: { ID: postID } })
             .then(res => {
                 setPostData(res.data.post)
@@ -101,7 +101,7 @@ const Post = props => {
 
     const deletePost = () => {
         if (window.confirm("Are you sure you would like to delete this post?")) {
-            axios.delete(`${process.env.REACT_APP_API_URL}/api/post`,
+            axios.delete(`/api/post`,
                 { data: { ID: postID } })
                 .then(() => {
                     setIsPostDeleted(true)
@@ -120,7 +120,7 @@ const Post = props => {
     }
 
     const saveEdit = () => {
-        axios.patch(`${process.env.REACT_APP_API_URL}/api/post`,
+        axios.patch(`/api/post`,
             { ID: postID, Post: editInput })
             .then(() => {
                 cancelEdit()

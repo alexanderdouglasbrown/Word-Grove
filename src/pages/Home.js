@@ -24,7 +24,7 @@ const Home = props => {
     getPostIDs.current = () => { return postIDs }
 
     const refreshPosts = useCallback(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/home/posts`,
+        axios.get(`/api/home/posts`,
             { params: { LastID: null } })
             .then(res => setPostIDs(res.data))
             .catch(() => setTimeout(refreshPosts, 500))
@@ -42,7 +42,7 @@ const Home = props => {
             return
 
         isFetching.current = true
-        axios.get(`${process.env.REACT_APP_API_URL}/api/home/posts`,
+        axios.get(`/api/home/posts`,
             { params: { lastID } })
             .then(res => setPostIDs([...postIDs, ...res.data]))
             .catch(() => toast.error("Sorry, something went wrong"))

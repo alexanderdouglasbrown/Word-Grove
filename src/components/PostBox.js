@@ -19,7 +19,7 @@ const PostBox = props => {
     }
 
     const handlePost = () => {
-        axios.post(`${process.env.REACT_APP_API_URL}/api/home/post`, { Post: inputText })
+        axios.post(`/api/home/post`, { Post: inputText })
             .then(() => {
                 setInputText("")
                 setCharacterCounter(maxCharacters)

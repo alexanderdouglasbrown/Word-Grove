@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios'
 
 import 'bulma/css/bulma.css'
 import 'react-toastify/dist/ReactToastify.css';
+
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

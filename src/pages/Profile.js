@@ -17,7 +17,7 @@ const Profile = props => {
     const [refreshIndex, setRefreshIndex] = useState(null)
 
     const refreshPosts = useCallback(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/profile/posts`,
+        axios.get(`/api/profile/posts`,
             { params: { UserID: profileData.userID } })
             .then(res => setPostIDs(res.data))
             .catch(err => {
@@ -42,7 +42,7 @@ const Profile = props => {
     }
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/profile/user`,
+        axios.get(`/api/profile/user`,
             { params: { Username: username } })
             .then(res => setProfileData(res.data))
             .catch(err => {
