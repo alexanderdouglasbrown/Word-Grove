@@ -10,7 +10,7 @@ import UserContext from '../UserContext'
 import './css/LoginRegister.css'
 
 const Register = props => {
-    const [, setToken] = useContext(UserContext)
+    const [userData, setToken] = useContext(UserContext)
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false)
@@ -18,15 +18,12 @@ const Register = props => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const [redirect, setRedirect] = useState(false)
-
     const handleSubmit = e => {
         e.preventDefault();
 
         axios.post(`/api/register`, { username, password, Confirm: confirmPassword })
             .then(res => {
                 setToken(res.data.jwt)
-                setRedirect(true)
             })
             .catch(err => {
                 if (err && err.response && err.response.data && err.response.data.error)
@@ -36,7 +33,7 @@ const Register = props => {
             })
     }
 
-    if (redirect)
+    if (userData.isLoggedIn)
         return <Redirect to="/" />
     else
         return (
