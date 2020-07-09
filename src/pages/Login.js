@@ -8,13 +8,11 @@ import { Redirect } from 'react-router-dom'
 import UserContext from '../UserContext'
 
 const Login = props => {
-    const [, setToken] = useContext(UserContext)
+    const [userData, setToken] = useContext(UserContext)
     
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-
-    const [redirect, setRedirect] = useState(false)
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -27,12 +25,11 @@ const Login = props => {
                 }
 
                 setToken(res.data.jwt)
-                setRedirect(true)
             })
             .catch()
     }
 
-    if (redirect)
+    if (userData.isLoggedIn)
         return <Redirect to="/" />
     else
         return (
