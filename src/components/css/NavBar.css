@@ -3,3 +3,7 @@
     font-size: 1.2rem;
     margin-left: 1rem;
 }
+
+.navbar-dropdown {
+    left: -2.25rem !important;
+}
