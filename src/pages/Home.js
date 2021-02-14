@@ -5,7 +5,6 @@ import noScroll from 'no-scroll'
 
 import UserContext from '../UserContext'
 
-import WaitOnWake from '../components/WaitOnWake'
 import PostBox from '../components/PostBox'
 import Post from '../components/Post'
 import PostModal from '../components/PostModal'
@@ -77,7 +76,7 @@ const Home = props => {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [handleScroll])
 
-    useEffect(() => { // Trigger infinite scroll if non enough height for a scrollbar
+    useEffect(() => { // Trigger infinite scroll if not enough height for a scrollbar
         if (postIDs && postIDs.length > 0 && window.innerHeight > document.documentElement.offsetHeight)
             handleScroll()
     }, [postIDs, handleScroll])
@@ -92,33 +91,25 @@ const Home = props => {
     }, [isPostModalVisible])
 
     return <>
-        {postIDs !== null ?
-            <>
-                <div className="container">
-                    <>
-                        {userData.isLoggedIn &&
-                            <PostBox refreshPosts={refreshPosts} />
-                        }
-                        {postIDs &&
-                            postIDs.map(postID => <Post
-                                key={postID}
-                                postID={postID}
-                                expandPost={openPostModal}
-                                refreshIndex={refreshIndex}
-                                setRefreshIndex={setRefreshIndex}
-                            />)
-                        }
-                    </>
-                </div>
-                <PostModal
-                    isOpen={isPostModalVisible}
-                    closeModal={closePostModal}
-                    postID={selectedPostID}
-                />
-            </>
-            :
-            <WaitOnWake />
-        }
+        <div className="container">
+            {userData.isLoggedIn &&
+                <PostBox refreshPosts={refreshPosts} />
+            }
+            {postIDs &&
+                postIDs.map(postID => <Post
+                    key={postID}
+                    postID={postID}
+                    expandPost={openPostModal}
+                    refreshIndex={refreshIndex}
+                    setRefreshIndex={setRefreshIndex}
+                />)
+            }
+        </div>
+        <PostModal
+            isOpen={isPostModalVisible}
+            closeModal={closePostModal}
+            postID={selectedPostID}
+        />
     </>
 }
 

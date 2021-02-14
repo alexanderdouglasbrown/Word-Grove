@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import axios from 'axios'
 
 const WaitOnWake = props => {
-    const [oneSecLater, setOneSecLater] = useState(false)
+    const { setIsServerAwake } = props
 
-    useEffect(() => {
-        if (!oneSecLater)
-            setTimeout(() => setOneSecLater(true), 1000)
-    }, [oneSecLater])
+    useEffect(() => pingServer(), [])
 
-    return <>
-        {oneSecLater ?
-            <div className="container">
-                <h2 className="subtitle" style={{ marginTop: "2rem" }}>Waking up the server...</h2>
-                <progress className="progress is-small is-primary" max="100"></progress>
-            </div>
-            :
-            <></>
-        }
-    </>
+    const pingServer = () => {
+        axios.get(`/api/common/hello`)
+            .then(() => setIsServerAwake(true))
+            .catch(() => setTimeout(pingServer, 500))
+    }
+
+    return <div className="container">
+        <h2 className="subtitle" style={{ marginTop: "2rem" }}>Waking up the server...</h2>
+        <progress className="progress is-small is-primary" max="100"></progress>
+    </div>
 }
 
 export default WaitOnWake
