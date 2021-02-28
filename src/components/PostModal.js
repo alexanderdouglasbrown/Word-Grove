@@ -10,6 +10,9 @@ const PostModal = props => {
 
     const onPostDelete = () => {
         closeModal()
+
+        if (props.refresh)
+            props.refresh()
     }
 
     return <Modal

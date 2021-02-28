@@ -21,7 +21,7 @@ const ExpandedPost = props => {
             return
 
         axios.get(`/api/comments/list`,
-            { params: { PostID: postID } })
+            { params: { PostID: Number(postID) } })
             .then(res => {
                 setCommentIDs(res.data)
             })

@@ -38,20 +38,20 @@ const Post = props => {
             expandPost(postID)
     }
 
-    const refreshPost = useCallback((forcedRefresh) => {
+    const refreshPost = useCallback(() => {
         if (postID === null)
             return
 
         axios.get(`/api/post`,
-            { params: { ID: postID } })
+            { params: { ID: Number(postID) } })
             .then(res => {
                 setPostData(res.data.post)
                 setTotalLikes(res.data.totalLikes)
                 setTotalComments(res.data.totalComments)
                 setIsUserLiked(res.data.isUserLiked)
             })
-            .catch(standardError)
-    }, [postID, standardError])
+            .catch(()=>{})
+    }, [postID, ])
 
     const handleInput = e => {
         let text = e.target.value
@@ -91,7 +91,7 @@ const Post = props => {
     const deletePost = () => {
         if (window.confirm("Are you sure you would like to delete this post?")) {
             axios.delete(`/api/post`,
-                { data: { ID: postID } })
+                { data: { ID: Number(postID) } })
                 .then(() => {
                     setIsPostDeleted(true)
                     setPostData(null)
@@ -105,7 +105,7 @@ const Post = props => {
 
     const saveEdit = () => {
         axios.patch(`/api/post`,
-            { ID: postID, Post: editInput })
+            { ID: Number(postID), Post: editInput })
             .then(() => {
                 cancelEdit()
                 refreshPost()
