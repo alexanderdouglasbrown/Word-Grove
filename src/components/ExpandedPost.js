@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
-import { toast } from 'react-toastify'
+
+import useStandardError from '../hooks/useStandardError'
 
 import UserContext from '../UserContext'
 
@@ -11,6 +12,7 @@ import Comment from '../components/Comment'
 const ExpandedPost = props => {
     const { postID, onPostDelete } = props
     const [userData] = useContext(UserContext)
+    const standardError = useStandardError()
 
     const [commentIDs, setCommentIDs] = useState(null)
 
@@ -23,13 +25,8 @@ const ExpandedPost = props => {
             .then(res => {
                 setCommentIDs(res.data)
             })
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
-                    toast.error("Sorry, an error occured")
-            })
-    }, [postID])
+            .catch(standardError)
+    }, [postID, standardError])
 
     useEffect(() => {
         if (!commentIDs)

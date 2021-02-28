@@ -2,14 +2,16 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { toast } from 'react-toastify'
 import { Redirect } from 'react-router-dom'
+
+import useStandardError from '../hooks/useStandardError'
 
 import UserContext from '../UserContext'
 
 import './css/LoginRegister.css'
 
 const Register = props => {
+    const standardError = useStandardError()
     const [userData, setToken] = useContext(UserContext)
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
@@ -25,12 +27,7 @@ const Register = props => {
             .then(res => {
                 setToken(res.data.jwt)
             })
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
-                    toast.error("Sorry, an error occured")
-            })
+            .catch(standardError)
     }
 
     if (userData.isLoggedIn)

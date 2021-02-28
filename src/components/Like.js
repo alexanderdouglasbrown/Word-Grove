@@ -5,11 +5,14 @@ import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { toast } from 'react-toastify'
 
+import useStandardError from '../hooks/useStandardError'
+
 import UserContext from '../UserContext'
 
 const Likes = props => {
     const [userData] = useContext(UserContext)
     const { postID, totalLikes, isUserLiked, refresh } = props
+    const standardError = useStandardError()
 
     const toggleLike = () => {
         if (!userData.isLoggedIn) {
@@ -29,7 +32,7 @@ const Likes = props => {
             .then(() => {
                 refresh()
             })
-            .catch(() => toast.error("Sorry, something went wrong"))
+            .catch(standardError)
     }
 
     const addLike = () => {
@@ -37,7 +40,7 @@ const Likes = props => {
             .then(() => {
                 refresh()
             })
-            .catch(() => toast.error("Sorry, something went wrong"))
+            .catch(standardError)
     }
 
     return <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "1.5rem" }}>

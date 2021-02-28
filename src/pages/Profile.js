@@ -1,14 +1,18 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import axios from 'axios'
 import noScroll from 'no-scroll'
+
+import useStandardError from '../hooks/useStandardError'
 
 import Post from '../components/Post'
 import PostModal from '../components/PostModal'
 
 const Profile = props => {
+    const standardError = useStandardError()
+
     const { username } = useParams()
+
     const [profileData, setProfileData] = useState(null)
     const [postIDs, setPostIDs] = useState(null)
 
@@ -20,13 +24,8 @@ const Profile = props => {
         axios.get(`/api/profile/posts`,
             { params: { UserID: profileData.userID } })
             .then(res => setPostIDs(res.data))
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
-                    toast.error("Sorry, an error occured")
-            })
-    }, [profileData])
+            .catch(standardError)
+    }, [profileData, standardError])
 
     const closePostModal = () => {
         setIsPostModalVisible(false)
@@ -45,13 +44,8 @@ const Profile = props => {
         axios.get(`/api/profile/user`,
             { params: { Username: username } })
             .then(res => setProfileData(res.data))
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
-                    toast.error("Sorry, an error occured")
-            })
-    }, [username])
+            .catch(standardError)
+    }, [username, standardError])
 
     useEffect(() => {
         if (profileData) {

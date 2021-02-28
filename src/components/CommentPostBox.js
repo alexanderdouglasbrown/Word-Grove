@@ -1,25 +1,23 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { toast } from 'react-toastify'
+
+import useStandardError from '../hooks/useStandardError'
 
 const CommentPostBox = props => {
     const { postID, refreshComments } = props
+    const standardError = useStandardError()
 
     const [inputText, setInputText] = useState("")
 
     const handlePost = () => {
-        axios.post(`/api/comments`,
-            { Comment: inputText, PostID: postID })
-            .then(() => {
-                setInputText("")
-                refreshComments()
-            })
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
-                    toast.error("Sorry, an error occured")
-            })
+        if (inputText && postID)
+            axios.post(`/api/comments`,
+                { Comment: String(inputText), PostID: Number(postID) })
+                .then(() => {
+                    setInputText("")
+                    refreshComments()
+                })
+                .catch(standardError)
     }
 
     return <div className="card" style={{ margin: "1rem auto" }}>

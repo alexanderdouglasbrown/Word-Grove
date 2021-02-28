@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext, useCallback, useRef } from 'react'
 import axios from 'axios'
-import { toast } from 'react-toastify'
 import noScroll from 'no-scroll'
+
+import useStandardError from '../hooks/useStandardError'
 
 import UserContext from '../UserContext'
 
@@ -11,6 +12,7 @@ import PostModal from '../components/PostModal'
 
 const Home = props => {
     const [userData] = useContext(UserContext)
+    const standardError = useStandardError()
 
     const [postIDs, setPostIDs] = useState(null)
 
@@ -26,8 +28,8 @@ const Home = props => {
         axios.get(`/api/home/posts`,
             { params: { LastID: null } })
             .then(res => setPostIDs(res.data))
-            .catch(() => setTimeout(refreshPosts, 500))
-    }, [])
+            .catch(standardError)
+    }, [standardError])
 
     const getMorePosts = useCallback(() => {
         const posts = getPostIDs.current()
@@ -44,9 +46,9 @@ const Home = props => {
         axios.get(`/api/home/posts`,
             { params: { lastID } })
             .then(res => setPostIDs([...postIDs, ...res.data]))
-            .catch(() => toast.error("Sorry, something went wrong"))
+            .catch(standardError)
             .finally(() => isFetching.current = false)
-    }, [postIDs])
+    }, [postIDs, standardError])
 
     const closePostModal = () => {
         setIsPostModalVisible(false)

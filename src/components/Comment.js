@@ -2,13 +2,15 @@ import React, { useState, useCallback, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Linkify from 'react-linkify'
 import { Link } from 'react-router-dom'
-import { toast } from 'react-toastify'
+
+import useStandardError from '../hooks/useStandardError'
 
 import UserContext from '../UserContext'
 
 const Comment = props => {
     const { commentID, refreshComments } = props
     const [userData] = useContext(UserContext)
+    const standardError = useStandardError()
 
     const [commentData, setCommentData] = useState(null)
 
@@ -21,13 +23,8 @@ const Comment = props => {
             .then(res => {
                 setCommentData(res.data)
             })
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
-                    toast.error("Sorry, an error occured")
-            })
-    }, [commentID])
+            .catch(standardError)
+    }, [commentID, standardError])
 
     const cancelEdit = () => {
         setIsEditMode(false)
@@ -41,12 +38,7 @@ const Comment = props => {
                 refreshComment()
                 cancelEdit()
             })
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
-                    toast.error("Sorry, an error occured")
-            })
+            .catch(standardError)
     }
 
     const startEdit = () => {
@@ -62,12 +54,7 @@ const Comment = props => {
                 .then(() => {
                     refreshComments()
                 })
-                .catch(err => {
-                    if (err && err.response && err.response.data && err.response.data.error)
-                        toast.error(err.response.data.error)
-                    else
-                        toast.error("Sorry, an error occured")
-                })
+                .catch(standardError)
         }
     }
 

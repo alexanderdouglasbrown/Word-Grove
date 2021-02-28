@@ -2,13 +2,15 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { toast } from 'react-toastify'
 import { Redirect } from 'react-router-dom'
+
+import useStandardError from '../hooks/useStandardError'
 
 import UserContext from '../UserContext'
 
 const Login = props => {
     const [userData, setToken] = useContext(UserContext)
+    const standardError = useStandardError()
     
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [username, setUsername] = useState("")
@@ -19,14 +21,9 @@ const Login = props => {
 
         axios.post(`/api/login`, { username, password })
             .then(res => {
-                if (res.data.error) {
-                    toast.error(res.data.error)
-                    return
-                }
-
                 setToken(res.data.jwt)
             })
-            .catch()
+            .catch(standardError)
     }
 
     if (userData.isLoggedIn)

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { toast } from 'react-toastify'
+
+import useStandardError from '../hooks/useStandardError'
 
 const PostBox = props => {
     const maxCharacters = 512
 
+    const standardError = useStandardError()
     const [inputText, setInputText] = useState("")
     const [characterCounter, setCharacterCounter] = useState(maxCharacters)
 
@@ -25,7 +27,7 @@ const PostBox = props => {
                 setCharacterCounter(maxCharacters)
                 props.refreshPosts()
             })
-            .catch(() => toast.error("Sorry, an error occurred"))
+            .catch(standardError)
     }
 
     return (

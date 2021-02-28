@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 
 const WaitOnWake = props => {
@@ -10,13 +10,13 @@ const WaitOnWake = props => {
             setTimeout(() => setIsVisible(true), 700)
     }, [isVisible])
 
-    useEffect(() => pingServer(), [])
-
-    const pingServer = () => {
+    const pingServer = useCallback(()=> {
         axios.get(`/api/common/hello`)
             .then(() => setIsServerAwake(true))
             .catch(() => setTimeout(pingServer, 500))
-    }
+    }, [setIsServerAwake])
+
+    useEffect(() => pingServer(), [pingServer])
 
     return <>
         {isVisible ?

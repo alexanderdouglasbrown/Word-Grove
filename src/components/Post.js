@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback, useContext } from 'react'
 import Linkify from 'react-linkify'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { toast } from 'react-toastify'
 
 import Like from '../components/Like'
+
+import useStandardError from '../hooks/useStandardError'
 
 import UserContext from '../UserContext'
 
@@ -13,6 +14,7 @@ import '../components/css/LinkButton.css'
 const Post = props => {
     const maxCharacters = 512
 
+    const standardError = useStandardError()
     const [userData] = useContext(UserContext)
 
     const { postID, isExpanded, isProfile, expandPost, refreshIndex, setRefreshIndex } = props
@@ -48,21 +50,8 @@ const Post = props => {
                 setTotalComments(res.data.totalComments)
                 setIsUserLiked(res.data.isUserLiked)
             })
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.notFound) {
-                    if (forcedRefresh) {
-                        setIsPostDeleted(true)
-                        setPostData(null)
-                    }
-                    else {
-                        toast.error("Post not found")
-                    }
-                }
-                else {
-                    toast.error("Sorry, an error occured")
-                }
-            })
-    }, [postID])
+            .catch(standardError)
+    }, [postID, standardError])
 
     const handleInput = e => {
         let text = e.target.value
@@ -110,12 +99,7 @@ const Post = props => {
                     if (props.onDelete)
                         props.onDelete()
                 })
-                .catch(err => {
-                    if (err && err.response && err.response.data && err.response.data.error)
-                        toast.error(err.response.data.error)
-                    else
-                        toast.error("Sorry, an error occured")
-                })
+                .catch(standardError)
         }
     }
 
@@ -129,12 +113,7 @@ const Post = props => {
                 if (props.onEdit)
                     props.onEdit()
             })
-            .catch(err => {
-                if (err && err.response && err.response.data && err.response.data.error)
-                    toast.error(err.response.data.error)
-                else
-                    toast.error("Sorry, an error occured")
-            })
+            .catch(standardError)
     }
 
     return <>
