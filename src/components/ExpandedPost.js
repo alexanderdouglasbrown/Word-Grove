@@ -10,7 +10,7 @@ import CommentPostBox from '../components/CommentPostBox'
 import Comment from '../components/Comment'
 
 const ExpandedPost = props => {
-    const { postID, onPostDelete } = props
+    const { postID, onPostDelete, closeModal } = props
     const [userData] = useContext(UserContext)
     const standardError = useStandardError()
 
@@ -38,6 +38,7 @@ const ExpandedPost = props => {
             postID={postID}
             isExpanded
             onDelete={onPostDelete}
+            closeModal={closeModal}
         />
         {userData.isLoggedIn &&
             <CommentPostBox
@@ -52,6 +53,7 @@ const ExpandedPost = props => {
                 key={commentID}
                 commentID={commentID}
                 refreshComments={refreshComments}
+                closeModal={closeModal}
             />)
         }
     </div>

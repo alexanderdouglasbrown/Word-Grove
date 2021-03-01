@@ -1,21 +1,29 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Linkify from 'react-linkify'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import useStandardError from '../hooks/useStandardError'
 
 import UserContext from '../UserContext'
 
 const Comment = props => {
-    const { commentID, refreshComments } = props
+    const { commentID, refreshComments, closeModal } = props
     const [userData] = useContext(UserContext)
     const standardError = useStandardError()
+    const history = useHistory()
 
     const [commentData, setCommentData] = useState(null)
 
     const [isEditMode, setIsEditMode] = useState(false)
     const [editInput, setEditInput] = useState("")
+
+    const chaseUserProfile = () => {
+        if (closeModal)
+            closeModal()
+
+        history.push(`/p/${commentData.username}`)
+    }
 
     const refreshComment = useCallback(() => {
         axios.get(`/api/comments`,
@@ -97,7 +105,7 @@ const Comment = props => {
                 <div className="card-footer" style={{ justifyContent: "space-between", fontSize: "0.7rem", color: "gray", padding: "1rem" }}>
                     <div>
                         <div>{`${commentData.date}${commentData.isEdited ? " (Edited)" : ""}`}</div>
-                        <div className="LinkButton"><Link to={`/p/${commentData.username}`}>{`${commentData.username}`}</Link></div>
+                        <div className="LinkButton" onClick={chaseUserProfile}>{`${commentData.username}`}</div>
                     </div>
                 </div>
             </div>

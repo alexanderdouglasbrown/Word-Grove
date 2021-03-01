@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
 import Linkify from 'react-linkify'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 
 import Like from '../components/Like'
 
@@ -14,10 +14,11 @@ import '../components/css/LinkButton.css'
 const Post = props => {
     const maxCharacters = 512
 
+    const history = useHistory()
     const standardError = useStandardError()
     const [userData] = useContext(UserContext)
 
-    const { postID, isExpanded, isProfile, expandPost, refreshIndex, setRefreshIndex } = props
+    const { postID, isExpanded, isProfile, expandPost, refreshIndex, setRefreshIndex, closeModal } = props
     const [postData, setPostData] = useState(null)
 
     const [totalLikes, setTotalLikes] = useState(null)
@@ -29,6 +30,13 @@ const Post = props => {
     const [characterCounter, setCharacterCounter] = useState(maxCharacters)
 
     const [isPostDeleted, setIsPostDeleted] = useState(false)
+
+    const chaseUserProfile = () => {
+        if (closeModal)
+            closeModal()
+
+        history.push(`/p/${postData.username}`)
+    }
 
     const expandPostClicked = e => {
         if (isEditMode || isExpanded)
@@ -50,8 +58,8 @@ const Post = props => {
                 setTotalComments(res.data.totalComments)
                 setIsUserLiked(res.data.isUserLiked)
             })
-            .catch(()=>{})
-    }, [postID, ])
+            .catch(() => { })
+    }, [postID,])
 
     const handleInput = e => {
         let text = e.target.value
@@ -159,7 +167,7 @@ const Post = props => {
                         {isProfile ?
                             <div>{`${postData.username}`}</div>
                             :
-                            <div className="LinkButton"><Link to={`/p/${postData.username}`}>{`${postData.username}`}</Link></div>
+                            <div className="LinkButton" onClick={chaseUserProfile}>{`${postData.username}`}</div>
                         }
                     </div>
 
