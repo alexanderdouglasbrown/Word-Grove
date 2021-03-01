@@ -23,7 +23,7 @@ const CommentPostBox = props => {
     return <div className="card" style={{ margin: "1rem auto" }}>
         <div className="card-content">
             <textarea required className="textarea" value={inputText} onChange={e => setInputText(e.target.value)} placeholder="Comment on this post" />
-            <button onClick={handlePost} className="button is-primary" style={{ marginTop: "0.5rem" }}>Comment</button>
+            <button disabled={!inputText} onClick={handlePost} className="button is-primary" style={{ marginTop: "0.5rem" }}>Comment</button>
         </div>
     </div>
 }

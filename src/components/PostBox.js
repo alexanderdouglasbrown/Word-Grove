@@ -21,20 +21,21 @@ const PostBox = props => {
     }
 
     const handlePost = () => {
-        axios.post(`/api/home/post`, { Post: inputText })
-            .then(() => {
-                setInputText("")
-                setCharacterCounter(maxCharacters)
-                props.refreshPosts()
-            })
-            .catch(standardError)
+        if (inputText)
+            axios.post(`/api/home/post`, { Post: inputText })
+                .then(() => {
+                    setInputText("")
+                    setCharacterCounter(maxCharacters)
+                    props.refreshPosts()
+                })
+                .catch(standardError)
     }
 
     return (
         <div className="card" style={{ margin: "1rem auto" }}>
             <div className="card-content">
                 <textarea required onChange={handleInput} className="textarea" placeholder="Put your words on Word Hole" value={inputText} />
-                <button onClick={handlePost} className="button is-primary" style={{ marginTop: "0.5rem" }}>Post</button>
+                <button disabled={!inputText} onClick={handlePost} className="button is-primary" style={{ marginTop: "0.5rem" }}>Post</button>
                 <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
             </div>
         </div>

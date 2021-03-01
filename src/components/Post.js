@@ -59,7 +59,7 @@ const Post = props => {
                 setIsUserLiked(res.data.isUserLiked)
             })
             .catch(() => { })
-    }, [postID,])
+    }, [postID])
 
     const handleInput = e => {
         let text = e.target.value
