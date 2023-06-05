@@ -10,7 +10,8 @@ const NavBar = () => {
     const [isUsernameDropdownActive, setIsUsernameDropdownActive] = useState(false)
 
     const handleClick = useCallback(e => {
-        if (isUsernameDropdownActive)
+        const target = e.target.id
+        if (isUsernameDropdownActive && !(target === "dropdown" || target === "hamburgerDropdown"))
             setIsUsernameDropdownActive(false)
     }, [isUsernameDropdownActive])
 
@@ -23,7 +24,7 @@ const NavBar = () => {
         <nav style={{ marginBottom: "1rem" }} className="navbar is-dark" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <Link className="navbar-item NavBar-brand" to="/">Word Grove</Link>
-                <div onClick={()=>setIsUsernameDropdownActive(!isUsernameDropdownActive)} role="button" className={`${isUsernameDropdownActive ? "is-active" : ""} navbar-burger`} aria-label="menu" aria-expanded="false">
+                <div id="hamburgerDropdown" onClick={() => setIsUsernameDropdownActive(!isUsernameDropdownActive)} role="button" className={`${isUsernameDropdownActive ? "is-active" : ""} navbar-burger`} aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -34,7 +35,7 @@ const NavBar = () => {
                 <div className="navbar-end">
                     {userData.isLoggedIn ?
                         <div id={"navbar-username-dropdown-button"} className={`navbar-item has-dropdown ${isUsernameDropdownActive ? "is-active" : ""}`}>
-                            <div className="navbar-link" onClick={() => setIsUsernameDropdownActive(!isUsernameDropdownActive)}>
+                            <div id="dropdown" className="navbar-link" onClick={() => setIsUsernameDropdownActive(!isUsernameDropdownActive)}>
                                 {userData.username}
                             </div>
 
