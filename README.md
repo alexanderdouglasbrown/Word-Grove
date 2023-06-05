@@ -1,3 +1,3 @@
-# Word Hole
+# Word Grove
 
-A site for sharing your words on the internet!
+Relax and enjoy some words on the internet
