@@ -22,7 +22,7 @@ const NavBar = () => {
     return (
         <nav style={{ marginBottom: "1rem" }} className="navbar is-dark" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
-                <Link className="navbar-item NavBar-brand" to="/">Word Hole</Link>
+                <Link className="navbar-item NavBar-brand" to="/">Word Grove</Link>
                 <div onClick={()=>setIsUsernameDropdownActive(!isUsernameDropdownActive)} role="button" className={`${isUsernameDropdownActive ? "is-active" : ""} navbar-burger`} aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>

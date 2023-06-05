@@ -1,8 +1,8 @@
 {
-  "name": "word-hole",
+  "name": "word-grove",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://wordhole.net",
+  "homepage": "https://wordgrove.net",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
@@ -10,7 +10,7 @@
     "@fortawesome/react-fontawesome": "^0.1.19",
     "axios": "^0.21.4",
     "bulma": "^0.9.4",
-    "gh-pages": "^4.0.0",
+    "gh-pages": "^5.0.0",
     "jwt-decode": "^3.1.2",
     "no-scroll": "^2.1.1",
     "react": "^17.0.2",
@@ -18,7 +18,7 @@
     "react-linkify": "^1.0.0-alpha",
     "react-modal": "^3.16.1",
     "react-router-dom": "^5.3.4",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-toastify": "^7.0.3"
   },
   "scripts": {

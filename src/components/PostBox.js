@@ -34,7 +34,7 @@ const PostBox = props => {
     return (
         <div className="card" style={{ margin: "1rem auto" }}>
             <div className="card-content">
-                <textarea required onChange={handleInput} className="textarea" placeholder="Put your words on Word Hole" value={inputText} />
+                <textarea required onChange={handleInput} className="textarea" placeholder="Plant your words into Word Grove" value={inputText} />
                 <button disabled={!inputText} onClick={handlePost} className="button is-primary" style={{ marginTop: "0.5rem" }}>Post</button>
                 <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
             </div>
