@@ -27,6 +27,7 @@ const Post = props => {
 
     const [isEditMode, setIsEditMode] = useState(false)
     const [editInput, setEditInput] = useState("")
+    const [editImageURL, setEditImageURL] = useState("")
     const [characterCounter, setCharacterCounter] = useState(maxCharacters)
 
     const [isPostDeleted, setIsPostDeleted] = useState(false)
@@ -72,14 +73,17 @@ const Post = props => {
     }
 
     const startEdit = () => {
-        const text = postData && postData.post ? postData.post : ""
+        const text = postData && postData.post
+        const imageURL = postData && postData.imageURL
         setEditInput(text)
+        setEditImageURL(imageURL)
         setIsEditMode(true)
         setCharacterCounter(maxCharacters - text.length)
     }
 
     const cancelEdit = () => {
         setEditInput("")
+        setEditImageURL("")
         setIsEditMode(false)
         setCharacterCounter(maxCharacters)
     }
@@ -113,7 +117,11 @@ const Post = props => {
 
     const saveEdit = () => {
         axios.patch(`/api/post`,
-            { ID: Number(postID), Post: editInput })
+            {
+                ID: Number(postID),
+                Post: editInput,
+                ImageURL: editImageURL
+            })
             .then(() => {
                 cancelEdit()
                 refreshPost()
@@ -145,19 +153,15 @@ const Post = props => {
                         <>
                             <div className="LinkButton-Danger" onClick={deletePost} style={{ position: "absolute", top: "0.25rem", left: "0.25rem", fontSize: "0.7rem" }}>Delete</div>
                             <textarea onChange={handleInput} value={editInput} className="textarea" />
+                            <input value= {editImageURL} onChange={e => setEditImageURL(e.target.value)} class="input is-small" style={{ borderRadius: "4px", marginTop: "0.25rem" }} type="text" placeholder="Image URL"></input>
                             <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
                         </>
                         :
                         <>
-                            {isExpanded ?
-                                <div style={{ whiteSpace: "pre-wrap" }}>
-                                    <Linkify>{postData.post}</Linkify>
-                                </div>
-                                :
-                                <div style={{ whiteSpace: "pre-wrap" }}>
-                                    <Linkify>{postData.post}</Linkify>
-                                </div>
-                            }
+                            <div style={{ whiteSpace: "pre-wrap" }}>
+                                {postData.imageURL && <img alt="" src={postData.imageURL} style={{ width: "100%", maxHeight: "30rem", objectFit: "contain" }}></img>}
+                                <Linkify>{postData.post}</Linkify>
+                            </div>
                         </>
                     }
                 </div>

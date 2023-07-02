@@ -16,7 +16,7 @@ const Likes = props => {
 
     const toggleLike = () => {
         if (!userData.isLoggedIn) {
-            toast.info("Please log in to Like posts")
+            toast.info("Please log in to like posts")
             return
         }
 
