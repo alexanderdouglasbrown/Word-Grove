@@ -54,10 +54,10 @@ const PostBox = props => {
             <div className="card-content">
                 <textarea required onChange={handleInput} className="textarea" placeholder="Plant your words into Word Grove" value={inputText} />
                 <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center", marginTop: "0.5rem", gap: "0.5rem" }}>
-                    <button class="button is-small" title={isIncludeImage ? "Cancel image" : "Add image"} style={{ borderRadius: "4px", width: "2rem" }} onClick={toggleImageURLMode}>
+                    <button className="button is-small" title={isIncludeImage ? "Cancel image" : "Add image"} style={{ borderRadius: "4px", width: "2rem" }} onClick={toggleImageURLMode}>
                         <FontAwesomeIcon style={{ fontSize: "1.25rem" }} icon={isIncludeImage ? faXmark : faImage} />
                     </button>
-                    {isIncludeImage ? <input value={imageURL} onChange={e => setImageURL(e.target.value)} class="input is-small" style={{ borderRadius: "4px" }} type="text" placeholder="Image URL"></input> : <div style={{ width: "100%" }}></div>}
+                    {isIncludeImage ? <input value={imageURL} onChange={e => setImageURL(e.target.value)} className="input is-small" style={{ borderRadius: "4px" }} type="text" placeholder="Image URL"></input> : <div style={{ width: "100%" }}></div>}
                     <button disabled={!inputText} onClick={handlePost} className="button is-primary">Post</button>
                 </div>
                 <div style={{ float: "left", color: "lightgray", fontSize: "0.9rem" }} >Remaining characters: {characterCounter}</div>

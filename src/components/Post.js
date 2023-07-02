@@ -132,6 +132,11 @@ const Post = props => {
             .catch(standardError)
     }
 
+    const handleImageClick = e => {
+        if (isExpanded && postData)
+            window.open(postData.imageURL, '_blank')
+    }
+
     return <>
         {postData ?
             <div className="card" style={{ margin: "1rem auto", overflowX: "auto" }}>
@@ -153,13 +158,13 @@ const Post = props => {
                         <>
                             <div className="LinkButton-Danger" onClick={deletePost} style={{ position: "absolute", top: "0.25rem", left: "0.25rem", fontSize: "0.7rem" }}>Delete</div>
                             <textarea onChange={handleInput} value={editInput} className="textarea" />
-                            <input value= {editImageURL} onChange={e => setEditImageURL(e.target.value)} class="input is-small" style={{ borderRadius: "4px", marginTop: "0.25rem" }} type="text" placeholder="Image URL"></input>
+                            <input value={editImageURL} onChange={e => setEditImageURL(e.target.value)} className="input is-small" style={{ borderRadius: "4px", marginTop: "0.25rem" }} type="text" placeholder="Image URL"></input>
                             <div style={{ float: "right", color: "lightgray" }} >Remaining characters: {characterCounter}</div>
                         </>
                         :
                         <>
                             <div style={{ whiteSpace: "pre-wrap" }}>
-                                {postData.imageURL && <img alt="" src={postData.imageURL} style={{ width: "100%", maxHeight: "30rem", objectFit: "contain" }}></img>}
+                                {postData.imageURL && <img onClick={(handleImageClick)} alt="" src={postData.imageURL} style={{ background: "#f1f1f1", width: "100%", maxHeight: "30rem", objectFit: "contain", cursor: "pointer" }}></img>}
                                 <Linkify>{postData.post}</Linkify>
                             </div>
                         </>
