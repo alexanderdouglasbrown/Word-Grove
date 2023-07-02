@@ -44,8 +44,8 @@ const Likes = props => {
     }
 
     return <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "1.5rem" }}>
-        <FontAwesomeIcon style={{ marginTop: "0.15rem", color: "fuchsia", cursor: "pointer" }} icon={isUserLiked ? faSolidHeart : faHeart} onClick={toggleLike} />
-        <div style={{ marginLeft: "0.25rem", fontWeight: 600 }}>{`${totalLikes ? `(${totalLikes})` : ""}`}</div>
+        <FontAwesomeIcon style={{ marginTop: "0.125rem", color: "fuchsia", cursor: "pointer" }} icon={isUserLiked ? faSolidHeart : faHeart} onClick={toggleLike} />
+        <div style={{ marginLeft: "0.25rem", fontWeight: 600 }}>{`(${totalLikes})`}</div>
     </div>
 }
 
