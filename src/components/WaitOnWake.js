@@ -21,7 +21,7 @@ const WaitOnWake = props => {
     return <>
         {isVisible ?
             <div className="container">
-                <h2 className="subtitle" style={{ marginTop: "2rem" }}>Waking up the server...</h2>
+                <h2 className="subtitle" style={{ marginTop: "2rem" }}>Connecting to the server...</h2>
                 <progress className="progress is-small is-primary" max="100"></progress>
             </div>
             :
